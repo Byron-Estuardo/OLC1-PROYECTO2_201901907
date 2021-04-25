@@ -74,7 +74,71 @@ const Instruccion = {
 			instruccionesIfVerdadero: _instruccionesIfVerdadero,
 			instruccionesIfFalso: _instruccionesIfFalso
 		}
-	}
+	},
+    nuevoPara: function (_variable, _valorVariable, _expresionLogica, _aumento, _instrucciones) {
+		return {
+			tipo: TIPO_INSTRUCCION.PARA,
+			expresionLogica: _expresionLogica,
+			instrucciones: _instrucciones,
+			aumento: _aumento,
+			variable: _variable,
+			valorVariable: _valorVariable
+		}
+	},
+    nuevoSwitch: function(_expresionNumerica, _casos) {
+		return {
+			tipo: TIPO_INSTRUCCION.SWITCH,
+			expresionNumerica: _expresionNumerica,
+			casos: _casos
+		}
+	},
+	nuevoListaCasos: function (_caso) {
+		var casos = []; 
+		casos.push(_caso);
+		return _casos;
+	},
+	nuevoCaso: function(_expresionNumerica, _instrucciones) {
+		return {
+			tipo: TIPO_OPCION_SWITCH.CASO,
+			expresionNumerica: _expresionNumerica,
+			instrucciones: _instrucciones
+		}
+	},
+	nuevoCasoDef: function(_instrucciones) {
+		return {
+			tipo: TIPO_OPCION_SWITCH.DEFECTO,
+			instrucciones: _instrucciones
+		}
+	},
+    nuevoMetodo: function(_nombre, _lista_parametros, _instrucciones, _linea, _columna){
+        return {
+            tipo: TIPO_INSTRUCCION.DEC_METODO,
+            nombre: _nombre,
+            lista_parametros: _lista_parametros,
+            instrucciones: _instrucciones,
+            linea: _linea,
+            columna: _columna
+        }
+    },
+    nuevoExec: function(_nombre, _lista_valores, _linea, _columna){
+        return{
+            tipo: TIPO_INSTRUCCION.EXEC,
+            nombre: _nombre,
+            lista_valores: _lista_valores,
+            linea: _linea,
+            columna: _columna
+        }
+    },
+    nuevaLlamada: function(_nombre, _lista_valores, _linea, _columna){
+        return{
+            tipo: TIPO_INSTRUCCION.LLAMADA_METODO,
+            nombre: _nombre,
+            lista_valores: _lista_valores,
+            linea: _linea,
+            columna: _columna
+        }
+    }
+
 }
 
 module.exports = Instruccion

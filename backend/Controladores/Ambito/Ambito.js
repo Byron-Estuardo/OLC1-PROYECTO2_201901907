@@ -1,3 +1,4 @@
+//Tabla de Simbolos
 class Ambito{
     constructor(_anterior){
         this.anterior = _anterior

@@ -1,6 +1,6 @@
 const TIPO_INSTRUCCION = require("../Tipos/TipoInstruccion");
 const Asignacion = require("./Asignacion");
-const Cout = require("./Cout");
+const Cout = require("./Print");
 const Declaracion = require("./Declaracion");
 const CicloWhile = require("./While");
 

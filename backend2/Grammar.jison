@@ -95,8 +95,7 @@
 [0-9]+("."[0-9]+)\b  	    return 'decimal';
 [0-9]+\b				    return 'entero';
 ([a-zA-Z])([a-zA-Z0-9_])*   return 'identificador'
-\"((\\\")|[^\n\"])*\"       { yytext = yytext.substr(1,yyleng-2); return 'string'; }
-\'((\\\')|[^\n\'])*\'	    { yytext = yytext.substr(1,yyleng-2); return 'char'; }
+["\""]([^"\""])*["\""]      return 'string'
 
 <<EOF>>               return 'EOF'
 .                     return 'INVALID'
@@ -106,7 +105,7 @@
 	const TIPO_OPERACION	= require('./Controladores/Tipos/TipoOperacion').TIPO_OPERACION;
 	const TIPO_VALOR 		= require('./Controladores/Tipos/TipoValor').TIPO_VALOR;
 	const TIPO_DATO			= require('./Controladores/Tipos/TipoDato').TIPO_DATO; //para jalar el tipo de dato
-	const INSTRUCCION	    = require('./Controladores/Instrucciones/Instruccion').INSTRUCCION;
+	const INSTRUCCION	= require('./Controladores/Instrucciones/Instruccion').INSTRUCCION;
 %}
 
 /* operator associations and precedence */
