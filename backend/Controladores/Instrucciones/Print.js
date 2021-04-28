@@ -1,8 +1,10 @@
 const procesarCadena = require("../Operacion/procesarCadena") //Count == print
 
-function Cout(_instruccion, _ambito){
+function Print(_instruccion, _ambito){
     const cadena = procesarCadena(_instruccion.expresion, _ambito).valor
+    console.log("Print( " + procesarCadena(_instruccion.expresion, _ambito).valor + ")" )
     return cadena
+    
 }
 
-module.exports = Cout
+module.exports = Print

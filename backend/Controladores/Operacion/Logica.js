@@ -6,7 +6,11 @@ const ValorExpresion = require("./ValorExpresion")
 
 function Logica(_expresion, _ambito){
     //true || false
-    if(_expresion.tipo === TIPO_VALOR.DECIMAL  || _expresion.tipo === TIPO_VALOR.ENTERO || 
+    console.log("Operaciones logicas")
+    if(_expresion.tipo === TIPO_OPERACION.NOT){
+        return not(_expresion.opIzq, _ambito)
+    }
+    else if(_expresion.tipo === TIPO_VALOR.DECIMAL  || _expresion.tipo === TIPO_VALOR.ENTERO || 
         _expresion.tipo === TIPO_VALOR.CARACTER || _expresion.tipo === TIPO_VALOR.BANDERA ||
         _expresion.tipo === TIPO_VALOR.CADENA || _expresion.tipo === TIPO_VALOR.IDENTIFICADOR){
         return ValorExpresion(_expresion, _ambito)
@@ -21,9 +25,6 @@ function Logica(_expresion, _ambito){
     }
     else if(_expresion.tipo === TIPO_OPERACION.AND){
         return and(_expresion.opIzq, _expresion.opDer, _ambito)
-    }
-    else if(_expresion.tipo === TIPO_OPERACION.NOT){
-        return not(_expresion.opIzq, _ambito)
     }
 }
 
@@ -76,8 +77,11 @@ function and(_opIzq, _opDer, _ambito){
 
 function not(_opIzq, _ambito){
     const opIzq = Logica(_opIzq, _ambito)
+    console.log(opIzq.tipo)
+    console.log(opIzq.valor)
     if(opIzq.tipo === TIPO_DATO.BANDERA){
         var resultado = false
+        console.log("entro prro?")
         if(opIzq.valor == false){
             resultado = true
         }

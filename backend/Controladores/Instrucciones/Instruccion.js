@@ -29,8 +29,9 @@ const Instruccion = {
     nuevaOperacionBinaria: function(_opIzq, _opDer, _tipo, _linea, _columna){
         return nuevaOperacion(_opIzq, _opDer, _tipo, _linea, _columna)
     },
-    nuevaOperacionUnaria: function(_tipo, _opIzq){
-        return nuevaOperacion(_operando, undefined, _tipo, _linea, _columna);
+    nuevaOperacionUnaria: function(_opIzq, _tipo,_linea, _columna){
+        console.log(" NuevaOperacionUnaria " + _opIzq + " " + _opIzq.tipo + " " + _opIzq.valor + " " + _tipo,_linea + " " + _columna)
+        return nuevaOperacion(_opIzq, undefined, _tipo, _linea, _columna);
     },
     nuevaDeclaracion: function(_id, _valor, _tipo, _linea, _columna){
         return{
@@ -53,61 +54,49 @@ const Instruccion = {
     },
     nuevoWhile: function(_expresion, _instrucciones, _linea, _columna){
         return {
-            tipo: TIPO_INSTRUCCION.WHILEE,
+            tipo: TIPO_INSTRUCCION.WHILE,
             expresion: _expresion,
             instrucciones: _instrucciones,
             linea: _linea,
             columna: _columna
         }
     },
-    nuevoIf: function(_expresion, _instruccion){
-        return {
-            tipo: TIPO_INSTRUCCION.IF,
-            expresion: _expresion,
-            Instruccion: _instruccion
-        }
-    },
-    nuevoIfElse: function(_expresionLogica, _instruccionesIfVerdadero, _instruccionesIfFalso) {
+    nuevoIf: function(_expresion, _instruccionesv, _instruccionesf, _linea, _columna) {
 		return {
-			tipo: TIPO_INSTRUCCION.IF_ELSE,
-			expresionLogica: _expresionLogica,
-			instruccionesIfVerdadero: _instruccionesIfVerdadero,
-			instruccionesIfFalso: _instruccionesIfFalso
+			tipo: TIPO_INSTRUCCION.IF,
+			expresion: _expresion,
+			instruccionesv: _instruccionesv,
+			instruccionesf: _instruccionesf,
+            linea: _linea,
+            columna: _columna
 		}
 	},
-    nuevoPara: function (_variable, _valorVariable, _expresionLogica, _aumento, _instrucciones) {
+    nuevoPara: function (_variable, _valorVariable, _expresion, _aumento, _instrucciones) {
 		return {
 			tipo: TIPO_INSTRUCCION.PARA,
-			expresionLogica: _expresionLogica,
+			expresion: _expresion,
 			instrucciones: _instrucciones,
 			aumento: _aumento,
 			variable: _variable,
 			valorVariable: _valorVariable
 		}
 	},
-    nuevoSwitch: function(_expresionNumerica, _casos) {
+    nuevoSwitch: function(_expresion, _casos, _bloqueSw, _linea, _columna) {
 		return {
 			tipo: TIPO_INSTRUCCION.SWITCH,
-			expresionNumerica: _expresionNumerica,
-			casos: _casos
+			expresion: _expresion,
+			casos: _casos,
+            bloqueSw: _bloqueSw,
+            linea: _linea,
+            columna: _columna
 		}
 	},
-	nuevoListaCasos: function (_caso) {
-		var casos = []; 
-		casos.push(_caso);
-		return _casos;
-	},
-	nuevoCaso: function(_expresionNumerica, _instrucciones) {
+	nuevoCaso: function(_expresion, _instrucciones, _linea, _columna) {
 		return {
-			tipo: TIPO_OPCION_SWITCH.CASO,
-			expresionNumerica: _expresionNumerica,
-			instrucciones: _instrucciones
-		}
-	},
-	nuevoCasoDef: function(_instrucciones) {
-		return {
-			tipo: TIPO_OPCION_SWITCH.DEFECTO,
-			instrucciones: _instrucciones
+			expresion: _expresion,
+			instrucciones: _instrucciones,
+            linea: _linea,
+            columna: _columna
 		}
 	},
     nuevoMetodo: function(_nombre, _lista_parametros, _instrucciones, _linea, _columna){

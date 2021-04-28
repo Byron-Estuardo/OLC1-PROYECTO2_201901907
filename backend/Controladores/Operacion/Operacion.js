@@ -23,9 +23,10 @@ function Operacion(_expresion, _ambito){
         return Relacional(_expresion, _ambito)
     }
     else if(_expresion.tipo === TIPO_OPERACION.OR || _expresion.tipo === TIPO_OPERACION.AND ||
-            _expresion.tipo === TIPO_OPERACION.NEGACION){
+            _expresion.tipo === TIPO_OPERACION.NOT){
         return Logica(_expresion, _ambito)
     }
 }
+
 
 module.exports = Operacion

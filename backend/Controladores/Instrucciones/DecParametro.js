@@ -2,7 +2,7 @@ const Simbolo = require("../Ambito/Simbolo");
 const TIPO_DATO = require("../Tipos/TipoDato");
 const Operacion = require("../Operacion/Operacion");
 
-function Declaracion(_instruccion, _ambito){
+function DecParametro(_instruccion, _ambito){
     if(_instruccion.tipo_dato === TIPO_DATO.ENTERO){
         var valor = 0
         if(_instruccion.valor != null){
@@ -67,7 +67,7 @@ function Declaracion(_instruccion, _ambito){
             valor = String.fromCharCode(op.valor) //casteamos a cadena
         }
         //verificamos si ya existe
-        const nuevoSimbolo = new Simbolo(_instruccion.id, valor, TIPO_DATO.CADENA, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, valor, TIPO_DATO.CARACTER, _instruccion.linea, _instruccion.columna)
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
@@ -100,4 +100,4 @@ function Declaracion(_instruccion, _ambito){
     }
 }
 
-module.exports = Declaracion
+module.exports = DecParametro

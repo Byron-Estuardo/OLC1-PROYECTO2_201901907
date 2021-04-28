@@ -36,7 +36,6 @@ function Relacional(_expresion, _ambito){
     }
     //a+5<6*8
 }
-
 function igualigual(_opIzq, _opDer, _ambito){
     const opIzq = Relacional(_opIzq, _ambito)
     const opDer = Relacional(_opDer, _ambito)
