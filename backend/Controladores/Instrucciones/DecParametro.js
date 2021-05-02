@@ -30,7 +30,7 @@ function DecParametro(_instruccion, _ambito){
             tipo = op.tipo;
             if(tipo === TIPO_DATO.DECIMAL){
                 valor = parseFloat(op.valor);
-            }
+            } 
             else {
                 "Error: No es posible asignar un valor de tipo "+tipo+" a la variable \n'"+ _instruccion.id +"' que es de tipo "+TIPO_DATO.DECIMAL+"... Linea: "+_instruccion.linea+" Columna: "+ _instruccion.columna;
             }

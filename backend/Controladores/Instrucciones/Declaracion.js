@@ -3,6 +3,7 @@ const TIPO_DATO = require("../Tipos/TipoDato");
 const Operacion = require("../Operacion/Operacion");
 
 function Declaracion(_instruccion, _ambito){
+    //console.log()
     if(_instruccion.tipo_dato === TIPO_DATO.ENTERO){
         var valor = 0
         if(_instruccion.valor != null){

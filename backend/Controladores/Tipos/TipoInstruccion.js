@@ -1,6 +1,7 @@
 const TIPO_INSTRUCCION = {
     IMPRIMIR:           'INSTR_IMPRIMIR',
     DECLARACION:        'INSTR_DECLARACION',
+    FUNCION:            'INSTR_FUNCION',
     ASIGNACION:         'INSTR_ASIGNACION',
     WHILE:              'INSTR_WHILE',
 	IF:                 'INSTR_IF',
@@ -9,14 +10,17 @@ const TIPO_INSTRUCCION = {
     SWITCH:			    'SWITCH',
 	SWITCH_OP:		    'SWITCH_OP',
 	SWITCH_DEF:		    'SWITCH_DEF',
-    PARA:               'INSTR_FOR',
+    FOR:                'INSTR_FOR',
     DEC_METODO:         'DEC_METODO',
+    INCREMENTO:         'INSTR_INCREMENTO',
+    DECREMENTO:         'INSTR_DECREMENTO',
     EXEC:               'EXEC',
     LLAMADA_METODO:     'LLAMADA_METODO',
     BREAK:              'INSTR_BREAK',
     RETURN:             'INSTR_RETURN',
-    CASO: 			'CASO',
-	DEFECTO: 		'DEFECTO'
+    CONTINUE:           'CONTINUE',
+    CASO: 			    'CASO',
+	DEFECTO: 		    'DEFECTO'
 } 
 
 module.exports = TIPO_INSTRUCCION

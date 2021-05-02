@@ -45,19 +45,25 @@
 "return"			  return 'Rreturn';
 
 //Void, para metodos
-"void"          return 'Rvoid'
+"void"          return 'Rvoid';
 
 //Operadores relacionales
-"=="            return 'igualii'
-"!="            return 'dif'
-"<="            return 'menorii'
-">="            return 'mayorii'
-">"             return 'mayorr'
-"<"             return 'menorr'
+"=="            return 'igualii';
+"!="            return 'dif';
+"<="            return 'menorii';
+">="            return 'mayorii';
+">"             return 'mayorr';
+"<"             return 'menorr';
 
 //Incremento y decremento
-"++"            return 'incremento'
-"--"            return 'decremento'
+"++"            return 'incremento';
+"--"            return 'decremento';
+
+//Extras
+"true" 				  return 'Rtrue';
+"false" 			  return 'Rfalse';
+"="					    return 'igual';
+"?"       			return 'opternario';
 
 //Operadores aritmeticos
 "+"					    return 'mass';
@@ -69,23 +75,19 @@
 
 //Operadores logicos
 "!"					    return 'nott';
-"&&"				    return 'andd'
+"&&"				    return 'andd';
 "||"				    return 'orr';
 
 //Simbolos
-"("             return 'parA'
-")"             return 'parC'
-","             return 'coma'
-";"             return 'ptcoma'
-":"             return 'dospts'
-"{"             return 'llaveA'
-"}"             return 'llaveC'
+"("             return 'parA';
+")"             return 'parC';
+","             return 'coma';
+";"             return 'ptcoma';
+":"             return 'dospts';
+"{"             return 'llaveA';
+"}"             return 'llaveC';
 
-//Extras
-"true" 				  return 'Rtrue';
-"false" 			  return 'Rfalse';
-"="					    return 'igual';
-"?"       			return 'opternario';
+
 
 //Secuencias de escape
 "\n"				    return 'saltolinea';
@@ -96,7 +98,7 @@
 
 [0-9]+("."[0-9]+)\b  	      return 'decimall';
 [0-9]+\b				            return 'enteroo';
-([a-zA-Z])([a-zA-Z0-9_])*   return 'identificador'
+([a-zA-Z])([a-zA-Z0-9_])*   return 'identificador';
 
 <<EOF>>               return 'EOF'
 .                     return 'INVALID'
@@ -110,22 +112,23 @@
 %}
 
 /* operator associations and precedence */
+%left umenos
 
-%left 'orr'
+%left 'pott'
+%left 'porr' 'divv' 'modd'
+%left 'mass' 'menoss'
+%left 'igualii' 'dif' 'menorr' 'menorii' 'mayorr' 'mayorii'
 %left 'andd'
 %right 'nott'
-%left 'igualii' 'dif' 'menorr' 'menorii' 'mayorr' 'mayorii'
-%left 'mass' 'menoss'
-%left 'porr' 'divv' 'modd' 
-%left 'pott' 'incremento' 'decremento'
+%left 'orr'
 
-%left umenos
+
 
 %start INICIO
 
 %% /* language grammar */
 
-INICIO: OPCIONESCUERPO EOF{ return $1; }
+INICIO: OPCIONESCUERPO EOF{ console.log(JSON.stringify($1,null,2)); return $1; }
 ;
 
 OPCIONESCUERPO: OPCIONESCUERPO CUERPO { $1.push($2); $$ = $1; }
@@ -141,16 +144,29 @@ CUERPO: DEC_VAR     { $$ = $1 }
       | RSIF        { $$ = $1 }
       | WHILE       { $$ = $1 }
       | SWITCHCASE  { $$ = $1 }
+      | INDEC       { $$ = $1 }
+      | INSFOR      { $$ = $1 }
+      | BREA        { $$ = $1 }
+      | RETU        { $$ = $1 }
+      | CONTINU     { $$ = $1 }
 ;
-//Execute
-EXEC: Rexec identificador parA parC ptcoma        { $$ = INSTRUCCION.nuevoExec($2, null, this._$.first_line,this._$.first_column+1) }
-;
+//Incremento - Decremento
+INDEC: identificador incremento ptcoma                     { $$ = INSTRUCCION.nuevoIncremento($1, this._$.first_line,this._$.first_column+1); }
+     | identificador decremento ptcoma                     { $$ = INSTRUCCION.nuevoDecremento($1, this._$.first_line,this._$.first_column+1); }
+;   
+//Incremento - Decremento para for
+INDEC1: identificador incremento                             { $$ = INSTRUCCION.nuevoIncremento($1, this._$.first_line,this._$.first_column+1); }
+      | identificador decremento                             { $$ = INSTRUCCION.nuevoDecremento($1, this._$.first_line,this._$.first_column+1); }
+;   
 //Asignacion de variables
-AS_VAR: identificador igual EXPRESION ptcoma      { $$ = INSTRUCCION.nuevaAsignacion($1, $3, this._$.first_line,this._$.first_column+1) }
+AS_VAR: identificador igual EXPRESION ptcoma               { $$ = INSTRUCCION.nuevaAsignacion($1, $3, this._$.first_line,this._$.first_column+1); }
+;
+//Asignacion de variables para for
+AS_VAR1: identificador igual EXPRESION                      { $$ = INSTRUCCION.nuevaAsignacion($1, $3, this._$.first_line,this._$.first_column+1); }
 ;
 //Declaracion de variables
-DEC_VAR: TIPO identificador ptcoma                  { $$ = INSTRUCCION.nuevaDeclaracion($2, null, $1, this._$.first_line,this._$.first_column+1) }
-       | TIPO identificador igual EXPRESION ptcoma  { $$ = INSTRUCCION.nuevaDeclaracion($2, $4, $1, this._$.first_line,this._$.first_column+1) }
+DEC_VAR: TIPO identificador ptcoma                  { $$ = INSTRUCCION.nuevaDeclaracion($2, null, $1, this._$.first_line,this._$.first_column+1); }
+       | TIPO identificador igual EXPRESION ptcoma  { $$ = INSTRUCCION.nuevaDeclaracion($2, $4, $1, this._$.first_line,this._$.first_column+1); }
 ;
 //Tipo de datos
 TIPO: Rentero                                     { $$ = TIPO_DATO.ENTERO } 
@@ -160,7 +176,15 @@ TIPO: Rentero                                     { $$ = TIPO_DATO.ENTERO }
     | Rbooleano                                   { $$ = TIPO_DATO.BANDERA }
 ;
 //Print
-IMPRIMIR: Rprint parA EXPRESION parC ptcoma        { $$ = new INSTRUCCION.nuevoPrint($3, this._$.first_line,this._$.first_column+1) }
+IMPRIMIR: Rprint parA EXPRESION parC ptcoma        { $$ = new INSTRUCCION.nuevoPrint($3, this._$.first_line,this._$.first_column+1); }
+;
+//For
+INSFOR: Rfor parA DEC_VAR EXPRESION ptcoma ACTU parC llaveA OPCIONESCUERPO llaveC   { $$ = INSTRUCCION.nuevofor($3, $4, $6, $9, this._$.first_line,this._$.first_column+1); }
+      | Rfor parA AS_VAR EXPRESION ptcoma ACTU parC llaveA OPCIONESCUERPO llaveC    { $$ = INSTRUCCION.nuevofor($3, $4, $6, $9, this._$.first_line,this._$.first_column+1); }
+;
+//Actualizacion For
+ACTU: INDEC1     { $$ = $1 }
+    | AS_VAR1    { $$ = $1 }
 ;
 //If
 RSIF: Rif parA EXPRESION parC llaveA OPCIONESCUERPO llaveC                                    { $$ = new INSTRUCCION.nuevoIf($3, $6, null, this._$.first_line,this._$.first_column+1); }
@@ -168,48 +192,72 @@ RSIF: Rif parA EXPRESION parC llaveA OPCIONESCUERPO llaveC                      
     | Rif parA EXPRESION parC llaveA OPCIONESCUERPO llaveC Relse llaveA OPCIONESCUERPO llaveC { $$ = new INSTRUCCION.nuevoIf($3, $6, $10, this._$.first_line,this._$.first_column+1); }
 ;
 //Switch
-SWITCHCASE: Rswitch parA EXPRESION parC llaveA LISTACASOS llaveC                            { $$ = INSTRUCCION.nuevoSwitch($3, $6, this._$.first_line,this._$.first_column+1);}
-          | Rswitch parA EXPRESION parC llaveA LISTACASOS Rdefault dospts OPCIONESCUERPO llaveC            { $$ = INSTRUCCION.nuevoSwitch($3, $6, , this._$.first_line,this._$.first_column+1);}
+SWITCHCASE: Rswitch parA EXPRESION parC llaveA LISTACASOS llaveC                                            { $$ = INSTRUCCION.nuevoSwitch($3, $6, this._$.first_line,this._$.first_column+1);}
+          | Rswitch parA EXPRESION parC llaveA LISTACASOS Rdefault dospts OPCIONESCUERPO llaveC             { $$ = INSTRUCCION.nuevoSwitch($3, $6, $9, this._$.first_line,this._$.first_column+1);}
 ;
 //casos
-LISTACASOS: LISTACASOS Rcase EXPRESION CASOS_EVALUAR                    { $$ = $1; $$.push(INSTRUCCION.nuevoCaso($3, $4)); }
-          | Rcase EXPRESION CASOS_EVALUAR                               { $$ = []; $$.push(INSTRUCCION.nuevoCaso($2, $3)); }
+LISTACASOS: LISTACASOS Rcase EXPRESION CASOS_EVALUAR                    { $$ = $1; $$.push(INSTRUCCION.nuevoCaso($3, $4, this._$.first_line,this._$.first_column+1)); }
+          | Rcase EXPRESION CASOS_EVALUAR                               { $$ = []; $$.push(INSTRUCCION.nuevoCaso($2, $3, this._$.first_line,this._$.first_column+1)); }
 ;
 //casos
 CASOS_EVALUAR: dospts                           { $$ = []; }
              | dospts OPCIONESCUERPO            { $$ = $2; }
 ;
 //While
-WHILE: Rwhile parA EXPRESION parC llaveA OPCIONESCUERPO llaveC   { $$ = new INSTRUCCION.nuevoWhile($3, $6 , this._$.first_line,this._$.first_column+1) }
+WHILE: Rwhile parA EXPRESION parC llaveA OPCIONESCUERPO llaveC   { $$ = new INSTRUCCION.nuevoWhile($3, $6 , this._$.first_line,this._$.first_column+1); }
+;
+//Execute
+EXEC: Rexec identificador parA parC ptcoma                 { $$ = INSTRUCCION.nuevoExec($2, null, this._$.first_line,this._$.first_column+1); }
+    | Rexec identificador parA LISTAVALORES parC ptcoma    { $$ = INSTRUCCION.nuevoExec($2, $4, this._$.first_line,this._$.first_column+1); }
+;
+//Lista valores
+LISTAVALORES: LISTAVALORES coma EXPRESION                   {$1.push($3); $$=$1}
+            | EXPRESION                                     {$$=[$1]}
 ;
 //llamar metodo
-LLAMADA_METODO: identificador parA parC ptcoma    { $$ = INSTRUCCION.nuevaLlamada($1, null, this._$.first_line,this._$.first_column+1) }
+LLAMADA_METODO: identificador parA parC ptcoma                  { $$ = INSTRUCCION.nuevaLlamada($1, null, this._$.first_line,this._$.first_column+1); }
+              | identificador parA LISTAVALORES parC ptcoma     { $$ = INSTRUCCION.nuevaLlamada($1, $3, this._$.first_line,this._$.first_column+1); }
 ;
 //declarar metodo
-DEC_MET : identificador parA parC llaveA OPCIONESMETODO llaveC
-        | identificador parA LISTAPARAMETROS parC llaveA OPCIONESMETODO llaveC
+DEC_MET : identificador parA parC llaveA OPCIONESMETODO llaveC                      {$$ = INSTRUCCION.nuevoMetodo($1, null, $5, this._$.first_line,this._$.first_column+1)}
+        | identificador parA LISTAPARAMETROS parC llaveA OPCIONESMETODO llaveC      {$$ = INSTRUCCION.nuevoMetodo($1, $3, $6, this._$.first_line,this._$.first_column+1)}
 ;
 //lista parametros
-LISTAPARAMETROS: LISTAPARAMETROS coma  PARAMETROS
-               | PARAMETROS
+LISTAPARAMETROS: LISTAPARAMETROS coma  PARAMETROS       {$1.push($3); $$=$1;}
+               | PARAMETROS                             {$$=[$1];}
 ;
 //parametros
-PARAMETROS: TIPO identificador
+PARAMETROS: TIPO identificador                          {$$ = INSTRUCCION.nuevaDeclaracion($2, null, $1, this._$.first_line,this._$.first_column+1)}
 ;
 //opciones metodo
-OPCIONESMETODO: OPCIONESMETODO CUERPOMETODO  { $1.push($2); $$ = $1; }
-              | CUERPOMETODO { $$ = [$1]; }
+OPCIONESMETODO: OPCIONESMETODO CUERPOMETODO         { $1.push($2); $$ = $1; }
+              | CUERPOMETODO                        { $$ = [$1]; }
 ;
 //cuerpo metodo
-CUERPOMETODO: DEC_VAR       { $$ = $1 }
-            | WHILE         { $$ = $1 }
-            | IMPRIMIR      { $$ = $1 }
-            | AS_VAR        { $$ = $1 }
+CUERPOMETODO: DEC_VAR           { $$ = $1 }
+            | IMPRIMIR          { $$ = $1 }
+            | AS_VAR            { $$ = $1 }
+            | RSIF              { $$ = $1 }
+            | WHILE             { $$ = $1 }
+            | SWITCHCASE        { $$ = $1 }
+            | INDEC             { $$ = $1 }
+            | INSFOR            { $$ = $1 }
+            | LLAMADA_METODO    { $$ = $1 }
 ;
 //break
-BREAK: Rbreak ptcoma        { $$ = $1 }
+BREA: Rbreak ptcoma         { $$ = INSTRUCCION.nuevoBreak(this._$.first_line,this._$.first_column+1); }
 ;
-                                   
+//return
+RETU: Rreturn ptcoma            { $$ = INSTRUCCION.nuevoReturn(null, this._$.first_line,this._$.first_column+1); }
+    | Rreturn EXPRESION ptcoma  { $$ = INSTRUCCION.nuevoReturn($2, this._$.first_line,this._$.first_column+1); }
+;
+//Continue
+CONTINU: Rcontinue ptcoma   { $$ = INSTRUCCION.nuevoContinue(this._$.first_line,this._$.first_column+1); }
+;
+//Funciones
+FUNC : TIPO identificador parA parC llaveA OPCIONESCUERPO llaveC                      {$$ = INSTRUCCION.nuevaFuncion($1, null, $5, this._$.first_line,this._$.first_column+1)}
+     | TIPO identificador parA LISTAPARAMETROS parC llaveA OPCIONESCUERPO llaveC      {$$ = INSTRUCCION.nuevaFuncion($1, $3, $6, this._$.first_line,this._$.first_column+1)}
+;                                  
 //Expresiones
 EXPRESION: EXPRESION mass EXPRESION              { $$ = INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.SUMA,this._$.first_line,this._$.first_column+1); }
          | EXPRESION menoss EXPRESION            { $$ = INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.RESTA,this._$.first_line,this._$.first_column+1); }

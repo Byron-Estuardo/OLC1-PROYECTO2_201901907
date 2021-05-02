@@ -15,5 +15,5 @@ function DecMetodo(_instruccion, _ambito){
     _ambito.addMetodo(nuevoMetodo.id, nuevoMetodo)
     return null
 }
-
+ 
 module.exports = DecMetodo

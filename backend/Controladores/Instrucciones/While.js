@@ -9,7 +9,28 @@ function CicloWhile(_instruccion, _ambito){
         while(operacion.valor){
             var nuevoAmbito = new Ambito(_ambito)
             const Bloque = require('./Bloque')
-            mensaje+=Bloque(_instruccion.instrucciones, nuevoAmbito)
+            var ejec = Bloque(_instruccion.instrucciones, nuevoAmbito)
+            mensaje+=ejec.cadena
+            if(ejec.hayBreak){
+                return mensaje
+            }
+            else if(ejec.hayContinue){
+                operacion = Operacion(_instruccion.expresion, _ambito)
+                return mensaje
+            }
+            else if(ejec.hayReturn){
+                console.log("entro al return")
+                console.log("Prueba mensaje")
+                console.log(mensaje)
+                if(ejec.respuesta != null){
+                    console.log("respuesta no nula")
+                    return ejec.respuesta
+                }
+                else{
+                    console.log("respuesta  nula")
+                    return mensaje
+                }
+            }
             //actualizamos
             operacion = Operacion(_instruccion.expresion, _ambito)
         }

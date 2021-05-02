@@ -6,7 +6,7 @@ const ValorExpresion = require("./ValorExpresion")
 
 function Logica(_expresion, _ambito){
     //true || false
-    console.log("Operaciones logicas")
+    //console.log("Operaciones logicas")
     if(_expresion.tipo === TIPO_OPERACION.NOT){
         return not(_expresion.opIzq, _ambito)
     }
@@ -77,11 +77,11 @@ function and(_opIzq, _opDer, _ambito){
 
 function not(_opIzq, _ambito){
     const opIzq = Logica(_opIzq, _ambito)
-    console.log(opIzq.tipo)
-    console.log(opIzq.valor)
+    //console.log(opIzq.tipo)
+    //console.log(opIzq.valor)
     if(opIzq.tipo === TIPO_DATO.BANDERA){
         var resultado = false
-        console.log("entro prro?")
+        //console.log("entro prro?")
         if(opIzq.valor == false){
             resultado = true
         }

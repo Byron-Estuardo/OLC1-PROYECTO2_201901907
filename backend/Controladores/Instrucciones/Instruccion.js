@@ -52,6 +52,22 @@ const Instruccion = {
             columna: _columna
         }
     },
+    nuevoIncremento: function(_expresion, _linea, _columna){
+        return{
+            expresion: _expresion,
+            tipo: TIPO_INSTRUCCION.INCREMENTO,
+            linea: _linea,
+            columna: _columna
+        }
+    },
+    nuevoDecremento: function(_expresion, _linea, _columna){
+        return{
+            expresion: _expresion,
+            tipo: TIPO_INSTRUCCION.DECREMENTO,
+            linea: _linea,
+            columna: _columna
+        }
+    },
     nuevoWhile: function(_expresion, _instrucciones, _linea, _columna){
         return {
             tipo: TIPO_INSTRUCCION.WHILE,
@@ -71,15 +87,17 @@ const Instruccion = {
             columna: _columna
 		}
 	},
-    nuevoPara: function (_variable, _valorVariable, _expresion, _aumento, _instrucciones) {
+    //variable = dec o asig 
+    nuevofor: function (_variable, _expresion, _aumento, _instrucciones, _linea, _columna) {
 		return {
-			tipo: TIPO_INSTRUCCION.PARA,
+			tipo: TIPO_INSTRUCCION.FOR,
 			expresion: _expresion,
 			instrucciones: _instrucciones,
 			aumento: _aumento,
 			variable: _variable,
-			valorVariable: _valorVariable
-		}
+            linea: _linea,
+            columna: _columna
+		} 
 	},
     nuevoSwitch: function(_expresion, _casos, _bloqueSw, _linea, _columna) {
 		return {
@@ -126,8 +144,40 @@ const Instruccion = {
             linea: _linea,
             columna: _columna
         }
+    },
+    nuevaFuncion: function(_id, _nombre, _lista_parametros, _instrucciones, _linea, _columna){
+        return {
+            id: _id,
+            tipo: TIPO_INSTRUCCION.FUNCION,
+            nombre: _nombre,
+            lista_parametros: _lista_parametros,
+            instrucciones: _instrucciones,
+            linea: _linea,
+            columna: _columna
+        }
+    },
+    nuevoBreak: function(_linea, _columna){
+        return {
+            tipo: TIPO_INSTRUCCION.BREAK,
+            linea: _linea,
+            columna: _columna
+        }
+    },
+    nuevoReturn: function(_expresion ,_linea, _columna){
+        return {
+            tipo: TIPO_INSTRUCCION.RETURN,
+            expresion: _expresion,
+            linea: _linea,
+            columna: _columna
+        }
+    },
+    nuevoContinue: function(_linea, _columna){
+        return {
+            tipo: TIPO_INSTRUCCION.CONTINUE,
+            linea: _linea,
+            columna: _columna
+        }
     }
-
 }
 
 module.exports = Instruccion
