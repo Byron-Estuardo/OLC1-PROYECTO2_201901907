@@ -10,7 +10,7 @@ function DecParametro(_instruccion, _ambito){
             tipo = op.tipo;
             if(tipo === TIPO_DATO.ENTERO){
                 valor = parseInt(op.valor);
-            }
+            } 
             else {
                 "Error: No es posible asignar un valor de tipo "+tipo+" a la variable \n'"+ _instruccion.id +"' que es de tipo "+TIPO_DATO.ENTERO+"... Linea: "+_instruccion.linea+" Columna: "+ _instruccion.columna;
             }
@@ -64,7 +64,9 @@ function DecParametro(_instruccion, _ambito){
         //si es una declaracion con asignacion
         if(_instruccion.valor!=null){
             op = Operacion(_instruccion.valor, _ambito)
-            valor = String.fromCharCode(op.valor) //casteamos a cadena
+            valor = op.valor //casteamos a cadena
+            console.log("DECLARACION")
+            console.log(valor)
         }
         //verificamos si ya existe
         const nuevoSimbolo = new Simbolo(_instruccion.id, valor, TIPO_DATO.CARACTER, _instruccion.linea, _instruccion.columna)

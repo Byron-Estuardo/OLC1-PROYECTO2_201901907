@@ -30,9 +30,9 @@ const Instruccion = {
         return nuevaOperacion(_opIzq, _opDer, _tipo, _linea, _columna)
     },
     nuevaOperacionUnaria: function(_opIzq, _tipo,_linea, _columna){
-        console.log(" NuevaOperacionUnaria " + _opIzq + " " + _opIzq.tipo + " " + _opIzq.valor + " " + _tipo,_linea + " " + _columna)
+        //console.log(" NuevaOperacionUnaria " + _opIzq + " " + _opIzq.tipo + " " + _opIzq.valor + " " + _tipo,_linea + " " + _columna)
         return nuevaOperacion(_opIzq, undefined, _tipo, _linea, _columna);
-    },
+    }, 
     nuevaDeclaracion: function(_id, _valor, _tipo, _linea, _columna){
         return{
             tipo: TIPO_INSTRUCCION.DECLARACION,
@@ -99,6 +99,15 @@ const Instruccion = {
             columna: _columna
 		} 
 	},
+    nuevoDoWhile: function (_instruccion, _expresion, _linea, _columna) {
+		return {
+			tipo: TIPO_INSTRUCCION.DOWHILE,
+			expresion: _expresion,
+			instruccion: _instruccion,
+            linea: _linea,
+            columna: _columna
+		} 
+	},
     nuevoSwitch: function(_expresion, _casos, _bloqueSw, _linea, _columna) {
 		return {
 			tipo: TIPO_INSTRUCCION.SWITCH,
@@ -127,6 +136,17 @@ const Instruccion = {
             columna: _columna
         }
     },
+    nuevaFuncion: function(_id, _nombre, _lista_parametros, _instrucciones, _linea, _columna){
+        return {
+            id: _id,
+            tipo: TIPO_INSTRUCCION.FUNCION,
+            nombre: _nombre,
+            lista_parametros: _lista_parametros,
+            instrucciones: _instrucciones,
+            linea: _linea,
+            columna: _columna
+        }
+    },
     nuevoExec: function(_nombre, _lista_valores, _linea, _columna){
         return{
             tipo: TIPO_INSTRUCCION.EXEC,
@@ -141,17 +161,6 @@ const Instruccion = {
             tipo: TIPO_INSTRUCCION.LLAMADA_METODO,
             nombre: _nombre,
             lista_valores: _lista_valores,
-            linea: _linea,
-            columna: _columna
-        }
-    },
-    nuevaFuncion: function(_id, _nombre, _lista_parametros, _instrucciones, _linea, _columna){
-        return {
-            id: _id,
-            tipo: TIPO_INSTRUCCION.FUNCION,
-            nombre: _nombre,
-            lista_parametros: _lista_parametros,
-            instrucciones: _instrucciones,
             linea: _linea,
             columna: _columna
         }
@@ -174,6 +183,33 @@ const Instruccion = {
     nuevoContinue: function(_linea, _columna){
         return {
             tipo: TIPO_INSTRUCCION.CONTINUE,
+            linea: _linea,
+            columna: _columna
+        }
+    },
+    nuevoFNat: function(_valor, _tipo, _linea, _columna){
+        return{
+            tipo:       _tipo,
+            valor:      _valor,
+            linea:      _linea,
+            columna:    _columna
+        }
+    },
+    nuevoCasteo: function(_tipoOb, _tipo, _valor, _linea, _columna){
+        return{
+            tipo:       _tipo,
+            valor:      _valor,
+            tipoOb:       _tipoOb,
+            linea:      _linea,
+            columna:    _columna
+        }
+    },
+    nuevoTernario: function(_tipo, _condicion, _valv, _valf, _linea, _columna){
+        return{
+            tipo: _tipo,
+            condicion: _condicion,
+            valv: _valv,
+            valf: _valf,
             linea: _linea,
             columna: _columna
         }

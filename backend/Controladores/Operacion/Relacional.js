@@ -8,7 +8,7 @@ function Relacional(_expresion, _ambito){
     if(_expresion.tipo === TIPO_VALOR.DECIMAL  || _expresion.tipo === TIPO_VALOR.ENTERO || 
        _expresion.tipo === TIPO_VALOR.CARACTER || _expresion.tipo === TIPO_VALOR.BANDERA ||
        _expresion.tipo === TIPO_VALOR.CADENA || _expresion.tipo === TIPO_VALOR.IDENTIFICADOR){
-        return ValorExpresion(_expresion, _ambito)
+        return ValorExpresion(_expresion, _ambito)  
     }
     else if(_expresion.tipo === TIPO_OPERACION.SUMA || _expresion.tipo === TIPO_OPERACION.RESTA || 
             _expresion.tipo === TIPO_OPERACION.MULTIPLICACION || _expresion.tipo === TIPO_OPERACION.DIVISION || 
@@ -35,7 +35,7 @@ function Relacional(_expresion, _ambito){
         return mayorig(_expresion.opIzq, _expresion.opDer, _ambito)
     }
     //a+5<6*8
-}
+} 
 function igualigual(_opIzq, _opDer, _ambito){
     const opIzq = Relacional(_opIzq, _ambito)
     const opDer = Relacional(_opDer, _ambito)
@@ -67,6 +67,7 @@ function igualigual(_opIzq, _opDer, _ambito){
 function diferente(_opIzq, _opDer, _ambito){
     const opIzq = Relacional(_opIzq, _ambito)
     const opDer = Relacional(_opDer, _ambito)
+    
     if(opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.ENTERO || opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.DECIMAL ||
         opIzq.tipo == TIPO_DATO.ENTERO && opDer.tipo == TIPO_DATO.CARACTER || opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.ENTERO ||
         opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.DECIMAL || opIzq.tipo == TIPO_DATO.DECIMAL && opDer.tipo == TIPO_DATO.CARACTER ||

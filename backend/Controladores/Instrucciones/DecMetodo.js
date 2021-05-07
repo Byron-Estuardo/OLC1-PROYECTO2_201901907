@@ -16,4 +16,4 @@ function DecMetodo(_instruccion, _ambito){
     return null
 }
  
-module.exports = DecMetodo
+module.exports = DecMetodo 

@@ -2,18 +2,18 @@ const TIPO_DATO = require("../Tipos/TipoDato");
 const TIPO_VALOR = require("../Tipos/TipoValor");
 
 function ValorExpresion(_expresion, _ambito){
-    if(_expresion.tipo === TIPO_VALOR.DECIMAL){
+    if(_expresion.tipo === TIPO_VALOR.ENTERO){
         return {
-            valor: parseFloat(_expresion.valor),
-            tipo: TIPO_DATO.DECIMAL,
+            valor: parseInt(_expresion.valor),
+            tipo: TIPO_DATO.ENTERO,
             linea: _expresion.linea,
             columna: _expresion.columna
         }
     }
-    else if(_expresion.tipo === TIPO_VALOR.ENTERO){
+    else if(_expresion.tipo === TIPO_VALOR.DECIMAL){
         return {
-            valor: parseInt(_expresion.valor),
-            tipo: TIPO_DATO.ENTERO,
+            valor: parseFloat(_expresion.valor),
+            tipo: TIPO_DATO.DECIMAL,
             linea: _expresion.linea,
             columna: _expresion.columna
         }

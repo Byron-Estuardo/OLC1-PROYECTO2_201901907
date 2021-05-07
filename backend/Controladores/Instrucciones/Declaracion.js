@@ -65,7 +65,9 @@ function Declaracion(_instruccion, _ambito){
         //si es una declaracion con asignacion
         if(_instruccion.valor!=null){
             op = Operacion(_instruccion.valor, _ambito)
-            valor = String.fromCharCode(op.valor) //casteamos a cadena
+            valor = op.valor //casteamos a cadena
+            console.log("DECLARACION")
+            console.log(valor)
         }
         //verificamos si ya existe
         const nuevoSimbolo = new Simbolo(_instruccion.id, valor, TIPO_DATO.CADENA, _instruccion.linea, _instruccion.columna)

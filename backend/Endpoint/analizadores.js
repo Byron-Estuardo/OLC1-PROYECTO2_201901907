@@ -8,8 +8,10 @@ module.exports=(parser, app)=>{
         //try {
             var ast = parser.parse(prueba)
             const AmbitoGlobal = new Ambito(null)
-            var cadena = Bloque(ast, AmbitoGlobal)
-            //var cadena = Global(ast, AmbitoGlobal)
+            //var cadena = Bloque(ast, AmbitoGlobal)
+            var cadena = Global(ast, AmbitoGlobal)
+            console.log("AST PRRO" )
+            console.log(ast)
             var resultado = {
                 arbol: ast,
                 consola: cadena  

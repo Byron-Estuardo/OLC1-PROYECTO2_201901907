@@ -23,15 +23,20 @@ function Exec(_instruccion, _ambito) {
                         error = true
                         cadena += mensaje + '\n'
                     }
-                }
+                } 
                 if (error) {
                     return cadena
                 }
                 //console.log(nuevoAmbito)
                 var ejec = Bloque(metodoEjecutar.instrucciones, nuevoAmbito)
                 var mensaje = ejec.cadena
+                console.log("Entro a final")
+                console.log(ejec.cadena)
                 if (ejec.hayBreak) {
-                    mensaje += `Error: Se ha encontrado un break fuera de un ciclo`
+                    mensaje += `Error: Se ha encontrado un break fuera de un ciclo 1`
+                }
+                else if (ejec.hayContinue) {
+                    mensaje += `Error: Se ha encontrado un continue fuera de un ciclo 1`
                 }
                 return mensaje
                 //return Bloque(metodoEjecutar.instrucciones, nuevoAmbito) 
@@ -44,8 +49,13 @@ function Exec(_instruccion, _ambito) {
         else {
             var ejec = Bloque(metodoEjecutar.instrucciones, nuevoAmbito)
             var mensaje = ejec.cadena
+            console.log("Entro a final")
+            console.log(ejec.cadena)
             if (ejec.hayBreak) {
                 mensaje += `Error: Se ha encontrado un break fuera de un ciclo`
+            }
+            else if (ejec.hayContinue) {
+                mensaje += `Error: Se ha encontrado un continue fuera de un ciclo`
             }
             return mensaje
         }

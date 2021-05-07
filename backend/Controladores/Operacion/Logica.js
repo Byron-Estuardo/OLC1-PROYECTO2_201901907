@@ -35,7 +35,7 @@ function or(_opIzq, _opDer, _ambito){
         var resultado = false
         if(opIzq.valor || opDer.valor == true){
             resultado = true
-        }
+        } 
         return {
             valor: resultado,
             tipo: TIPO_DATO.BANDERA,

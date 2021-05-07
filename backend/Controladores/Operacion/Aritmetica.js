@@ -1,4 +1,3 @@
-
 const TIPO_DATO = require("../Tipos/TipoDato")
 const TIPO_OPERACION = require("../Tipos/TipoOperacion")
 const TIPO_VALOR = require("../Tipos/TipoValor")
@@ -10,6 +9,7 @@ const TipoResultadoMod = require("./mod")
 const TipoResultadoPot = require("./pot")
 const TipoResultadoNegacion = require("./negacion")
 const ValorExpresion = require("./ValorExpresion")
+const Casteoss = require("./Casteos");
 
 function Aritmetica(_expresion, _ambito){
     
@@ -18,14 +18,16 @@ function Aritmetica(_expresion, _ambito){
         _expresion.tipo === TIPO_VALOR.CADENA || _expresion.tipo === TIPO_VALOR.IDENTIFICADOR){
         return ValorExpresion(_expresion, _ambito)
     }
+    else if(_expresion.tipo === TIPO_OPERACION.CASTEO || _expresion.tipo === TIPO_OPERACION.LOWER ||
+        _expresion.tipo === TIPO_OPERACION.UPPER || _expresion.tipo === TIPO_OPERACION.TSTRING || 
+        _expresion.tipo === TIPO_OPERACION.TYPEOF || _expresion.tipo === TIPO_OPERACION.ROUND ||
+        _expresion.tipo === TIPO_OPERACION.TRUNCATE || _expresion.tipo === TIPO_OPERACION.LENGTH){
+        return Casteoss(_expresion, _ambito)
+    }
     else if (_expresion.tipo === TIPO_OPERACION.NEGATIVO) {
-        //console.log(_expresion.opIzq)
         return negar(_expresion.opIzq, _ambito)
     }
     else if(_expresion.tipo === TIPO_OPERACION.SUMA){
-        //console.log(" INICIAL " +_expresion.opIzq.tipo + " "+ _expresion.opIzq.valor)
-        //console.log(" INICIAL " +_expresion.opDer.tipo + " "+ _expresion.opDer.valor)
-        //console.log(" Tipo dato " + TIPO_DATO.CADENA)
         return suma(_expresion.opIzq, _expresion.opDer, _ambito)
     }
     else if(_expresion.tipo === TIPO_OPERACION.RESTA){
@@ -42,7 +44,7 @@ function Aritmetica(_expresion, _ambito){
     }
     else if(_expresion.tipo === TIPO_OPERACION.MODULO){
         return mod(_expresion.opIzq, _expresion.opDer, _ambito)
-    }
+    } 
 }
 
 function negar(_opIzq, _ambito){ 
@@ -56,6 +58,7 @@ function negar(_opIzq, _ambito){
             //console.log(2*-1)
             //console.log()
             //console.log(parseInt(opIzq.valor) * -1)
+            //if(opIzq == tipo)
             const resultado = parseInt(opIzq.valor) * -1;
             return{
                 valor: resultado,
@@ -76,7 +79,7 @@ function negar(_opIzq, _ambito){
     }
     var respuesta = (opIzq.tipo===null ? opIzq.valor: "")+(opDer.tipo===null ? opDer.valor: "")
     return{
-        valor: respuesta+'\nError semántico: no se puede realizar la operacion suma... Linea: '+_opIzq.linea+" Columna: "+_opIzq.columna,
+        valor: respuesta+'\nError semántico: no se puede realizar la operacion negacion... Linea: '+_opIzq.linea+" Columna: "+_opIzq.columna,
         tipo: null,
         linea: _opIzq.linea,
         columna: _opIzq.columna
@@ -86,46 +89,100 @@ function negar(_opIzq, _ambito){
 function suma(_opIzq, _opDer, _ambito){ 
     const opIzq = Aritmetica(_opIzq,_ambito)
     const opDer = Aritmetica(_opDer,_ambito)
-    //console.log(" Dentro suma OPIZ " + opIzq.tipo)
-    //console.log(" Dentro suma OPDER " +opDer.tipo)
     const tipoRes = TipoSuma(opIzq.tipo, opDer.tipo)
-    //console.log(" Tipo de Resultado suma "+tipoRes)
+    
     if(tipoRes!=null){
         if(tipoRes === TIPO_DATO.ENTERO){
-            //console.log(opDer.tipo)
-            //console.log(opIzq.tipo)
-            const resultado = parseInt(opIzq.valor) + parseInt(opDer.valor);
-            //console.log(resultado)
-            return{
-                valor: resultado,
-                tipo: tipoRes,
-                linea: _opIzq.linea,
-                columna: _opIzq.columna
+            //console.log("suma")
+            if (opIzq.tipo == TIPO_DATO.CARACTER && opDer.tipo != TIPO_DATO.CARACTER){
+                var valor1 = opIzq.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseInt(obtener) + parseInt(opDer.valor);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
             }
+            else if (opIzq.tipo != TIPO_DATO.CARACTER && opDer.tipo == TIPO_DATO.CARACTER){
+                var valor1 = opDer.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseInt(opIzq.valor) + parseInt(obtener);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }else{
+                const resultado = parseInt(opIzq.valor) + parseInt(opDer.valor);
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }
+            
         }
         else if(tipoRes === TIPO_DATO.DECIMAL){
-            //console.log(opDer.tipo)
-            //console.log(opIzq.tipo)
-            const resultado = parseFloat(opIzq.valor) + parseFloat(opDer.valor);
-            //console.log(resultado)
-            return{
-                valor: resultado,
-                tipo: tipoRes,
-                linea: _opIzq.linea,
-                columna: _opIzq.columna
+            //console.log("suma")
+            if (opIzq.tipo == TIPO_DATO.CARACTER && opDer.tipo != TIPO_DATO.CARACTER){
+                var valor1 = opIzq.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseFloat(obtener) + parseFloat(opDer.valor);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
             }
+            else if (opIzq.tipo != TIPO_DATO.CARACTER && opDer.tipo == TIPO_DATO.CARACTER){
+                var valor1 = opDer.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseFloat(opIzq.valor) + parseFloat(obtener);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }else{
+                const resultado = parseFloat(opIzq.valor) + parseFloat(opDer.valor);
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }
+            
         }
         if(tipoRes === TIPO_DATO.CADENA){
-            //console.log(opDer.tipo)
-            //console.log(opIzq.tipo)
-            const resultado = String(opIzq.valor) + String(opDer.valor);
-            //console.log(resultado)
-            return{
-                valor: resultado,
-                tipo: tipoRes,
-                linea: _opIzq.linea,
-                columna: _opIzq.columna
+            
+                const resultado = String(opIzq.valor) + String(opDer.valor);
+                console.log("CADENASSS: REsultado ")
+                console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                
             }
+            
         }
     }
     var respuesta = (opIzq.tipo===null ? opIzq.valor: "")+(opDer.tipo===null ? opDer.valor: "")
@@ -140,29 +197,78 @@ function suma(_opIzq, _opDer, _ambito){
 function resta(_opIzq, _opDer, _ambito){
     const opIzq = Aritmetica(_opIzq,_ambito)
     const opDer = Aritmetica(_opDer,_ambito)
-    //console.log(" Dentro resta OPIZ " + opIzq.tipo)
-    //console.log(" Dentro resta OPDER " +opDer.tipo)
     const tipoRes = TipoResultadoResta(opIzq.tipo, opDer.tipo)
-    //console.log(" Tipo de Resultado resta "+tipoRes)
     if(tipoRes!=null){
         if(tipoRes === TIPO_DATO.ENTERO){
-            const resultado = parseInt(opIzq.valor) - parseInt(opDer.valor);
-            console.log(" Tipo de Resultado resta "+resultado)
-            return{
-                valor: resultado,
-                tipo: tipoRes,
-                linea: _opIzq.linea,
-                columna: _opIzq.columna
+            if (opIzq.tipo == TIPO_DATO.CARACTER && opDer.tipo != TIPO_DATO.CARACTER){
+                var valor1 = opIzq.valor
+                var obtener = valor1.charCodeAt(0)
+                const resultado = parseInt(obtener) - parseInt(opDer.valor);   
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }
+            else if (opIzq.tipo != TIPO_DATO.CARACTER && opDer.tipo == TIPO_DATO.CARACTER){
+                var valor1 = opDer.valor
+                var obtener = valor1.charCodeAt(0)
+                const resultado = parseInt(opIzq.valor) - parseInt(obtener);
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }else{
+                const resultado = parseInt(opIzq.valor) - parseInt(opDer.valor);
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
             }
         }
         if(tipoRes === TIPO_DATO.DECIMAL){
-            const resultado = parseFloat(opIzq.valor) - parseFloat(opDer.valor);
-            return{
-                valor: resultado,
-                tipo: tipoRes,
-                linea: _opIzq.linea,
-                columna: _opIzq.columna
+           //console.log("resta")
+            if (opIzq.tipo == TIPO_DATO.CARACTER && opDer.tipo != TIPO_DATO.CARACTER){
+                var valor1 = opIzq.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseFloat(obtener) - parseFloat(opDer.valor);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
             }
+            else if (opIzq.tipo != TIPO_DATO.CARACTER && opDer.tipo == TIPO_DATO.CARACTER){
+                var valor1 = opDer.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseFloat(opIzq.valor) - parseFloat(obtener);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }else{
+                const resultado = parseFloat(opIzq.valor) - parseFloat(opDer.valor);
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }
+            
         }
     }
     var respuesta = (opIzq.tipo===null ? opIzq.valor: "")+(opDer.tipo===null ? opDer.valor: "")
@@ -177,28 +283,81 @@ function resta(_opIzq, _opDer, _ambito){
 function multi(_opIzq, _opDer, _ambito){
     const opIzq = Aritmetica(_opIzq,_ambito)
     const opDer = Aritmetica(_opDer,_ambito)
-    //console.log(" Dentro multi OPIZ " + opIzq.tipo)
-    //console.log(" Dentro multi OPDER " +opDer.tipo)
     const tipoRes = TipoResultadoMulti(opIzq.tipo, opDer.tipo)
-    //console.log(" Tipo de Resultado multi "+tipoRes)
     if(tipoRes!=null){
         if(tipoRes === TIPO_DATO.ENTERO){
-            const resultado = parseInt(opIzq.valor) * parseInt(opDer.valor);
-            return{
-                valor: resultado,
-                tipo: tipoRes,
-                linea: _opIzq.linea,
-                columna: _opIzq.columna
+            if (opIzq.tipo == TIPO_DATO.CARACTER && opDer.tipo != TIPO_DATO.CARACTER){
+                var valor1 = opIzq.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseInt(obtener) * parseInt(opDer.valor);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
             }
+            else if (opIzq.tipo != TIPO_DATO.CARACTER && opDer.tipo == TIPO_DATO.CARACTER){
+                var valor1 = opDer.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseInt(opIzq.valor) * parseInt(obtener);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }else{
+                const resultado = parseInt(opIzq.valor) * parseInt(opDer.valor);
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }
+            
         }
         if(tipoRes === TIPO_DATO.DECIMAL){
-            const resultado = parseFloat(opIzq.valor) * parseFloat(opDer.valor);
-            return{
-                valor: resultado,
-                tipo: tipoRes,
-                linea: _opIzq.linea,
-                columna: _opIzq.columna
+            if (opIzq.tipo == TIPO_DATO.CARACTER && opDer.tipo != TIPO_DATO.CARACTER){
+                var valor1 = opIzq.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseFloat(obtener) * parseFloat(opDer.valor);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
             }
+            else if (opIzq.tipo != TIPO_DATO.CARACTER && opDer.tipo == TIPO_DATO.CARACTER){
+                var valor1 = opDer.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseFloat(opIzq.valor) * parseFloat(obtener);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }else{
+                const resultado = parseFloat(opIzq.valor) * parseFloat(opDer.valor);
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }
+            
         }
     }
     var respuesta = (opIzq.tipo===null ? opIzq.valor: "")+(opDer.tipo===null ? opDer.valor: "")
@@ -213,19 +372,44 @@ function multi(_opIzq, _opDer, _ambito){
 function div(_opIzq, _opDer, _ambito){
     const opIzq = Aritmetica(_opIzq,_ambito)
     const opDer = Aritmetica(_opDer,_ambito)
-    //console.log(" Dentro div OPIZ " + opIzq.tipo)
-    //console.log(" Dentro div OPDER " +opDer.tipo)
     const tipoRes = TipoResultadoDiv(opIzq.tipo, opDer.tipo)
-    //console.log(" Tipo de Resultado div "+tipoRes)
     if(tipoRes!=null){
         if(tipoRes === TIPO_DATO.DECIMAL){
-            const resultado = parseFloat(opIzq.valor) / parseFloat(opDer.valor);
-            return{
-                valor: resultado,
-                tipo: tipoRes,
-                linea: _opIzq.linea,
-                columna: _opIzq.columna
+            if (opIzq.tipo == TIPO_DATO.CARACTER && opDer.tipo != TIPO_DATO.CARACTER){
+                var valor1 = opIzq.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseFloat(obtener) / parseFloat(opDer.valor);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
             }
+            else if (opIzq.tipo != TIPO_DATO.CARACTER && opDer.tipo == TIPO_DATO.CARACTER){
+                var valor1 = opDer.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseFloat(opIzq.valor) / parseFloat(obtener);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }else{
+                const resultado = parseFloat(opIzq.valor) / parseFloat(opDer.valor);
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }
+            
         }
     }
     var respuesta = (opIzq.tipo===null ? opIzq.valor: "")+(opDer.tipo===null ? opDer.valor: "")
@@ -240,28 +424,78 @@ function div(_opIzq, _opDer, _ambito){
 function pot(_opIzq, _opDer, _ambito){
     const opIzq = Aritmetica(_opIzq,_ambito)
     const opDer = Aritmetica(_opDer,_ambito)
-    //console.log(" Dentro pot OPIZ " + opIzq.tipo + " " + opIzq.valor)
-    //console.log(" Dentro pot OPDE " + opDer.tipo + " " + opDer.valor)
     const tipoRes = TipoResultadoPot(opIzq.tipo, opDer.tipo)
-    //console.log(" Tipo de Resultado pot "+tipoRes)
     if(tipoRes!=null){
         if(tipoRes === TIPO_DATO.ENTERO){
-            //console.log(Math.pow(parseInt(opIzq.valor), parseInt(opDer.valor)))
-            const resultado = Math.pow(parseInt(opIzq.valor), parseInt(opDer.valor));
-            return{
-                valor: resultado,
-                tipo: tipoRes,
-                linea: _opIzq.linea,
-                columna: _opIzq.columna
+            if (opIzq.tipo == TIPO_DATO.CARACTER && opDer.tipo != TIPO_DATO.CARACTER){
+                var valor1 = opIzq.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = Math.pow(parseInt(obtener) , parseInt(opDer.valor));  
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }
+            else if (opIzq.tipo != TIPO_DATO.CARACTER && opDer.tipo == TIPO_DATO.CARACTER){
+                var valor1 = opDer.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = Math.pow(parseInt(opIzq.valor) , parseInt(obtener));
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }else{
+                const resultado = Math.pow(parseInt(opIzq.valor) , parseInt(opDer.valor));
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
             }
         }
         if(tipoRes === TIPO_DATO.DECIMAL){
-            const resultado = Math.pow(parseFloat(opDer.valor) , parseFloat(opIzq.valor));
-            return{
-                valor: resultado,
-                tipo: tipoRes,
-                linea: _opIzq.linea,
-                columna: _opIzq.columna
+            if (opIzq.tipo == TIPO_DATO.CARACTER && opDer.tipo != TIPO_DATO.CARACTER){
+                var valor1 = opIzq.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = Math.pow(parseFloat(obtener) , parseFloat(opDer.valor));  
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }
+            else if (opIzq.tipo != TIPO_DATO.CARACTER && opDer.tipo == TIPO_DATO.CARACTER){
+                var valor1 = opDer.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = Math.pow(parseFloat(opIzq.valor) , parseFloat(obtener));
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }else{
+                const resultado = Math.pow(parseFloat(opIzq.valor) , parseFloat(opDer.valor));
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
             }
         }
     }
@@ -277,21 +511,44 @@ function pot(_opIzq, _opDer, _ambito){
 function mod(_opIzq, _opDer, _ambito){
     const opIzq = Aritmetica(_opIzq,_ambito)
     const opDer = Aritmetica(_opDer,_ambito)
-    //console.log(" Dentro mod OPIZ " + opIzq.tipo)
-    //console.log(" Dentro mod OPDER " +opDer.tipo)
     const tipoRes = TipoResultadoMod(opIzq.tipo, opDer.tipo)
-    //console.log(" Tipo de Resultado mod "+tipoRes)
     if(tipoRes!=null){
         if(tipoRes === TIPO_DATO.DECIMAL){
-            //console.log(parseFloat(opIzq.valor) % parseFloat(opDer.valor))
-            const resultado = parseFloat(opIzq.valor) % parseFloat(opDer.valor);
-
-            return{
-                valor: resultado,
-                tipo: tipoRes,
-                linea: _opIzq.linea,
-                columna: _opIzq.columna
+            if (opIzq.tipo == TIPO_DATO.CARACTER && opDer.tipo != TIPO_DATO.CARACTER){
+                var valor1 = opIzq.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseFloat(obtener) % parseFloat(opDer.valor);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
             }
+            else if (opIzq.tipo != TIPO_DATO.CARACTER && opDer.tipo == TIPO_DATO.CARACTER){
+                var valor1 = opDer.valor
+                var obtener = valor1.charCodeAt(0)
+                //console.log(obtener)
+                const resultado = parseFloat(obtener) % parseFloat(opDer.valor);    
+                //console.log(resultado)
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }else{
+                const resultado = parseFloat(opIzq.valor) % parseFloat(opDer.valor);
+                return{
+                    valor: resultado,
+                    tipo: tipoRes,
+                    linea: _opIzq.linea,
+                    columna: _opIzq.columna
+                }
+            }
+            
         }
     }
     var respuesta = (opIzq.tipo===null ? opIzq.valor: "")+(opDer.tipo===null ? opDer.valor: "")

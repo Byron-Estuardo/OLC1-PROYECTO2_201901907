@@ -13,7 +13,7 @@ function Global(_instrucciones, _ambito){
         if(_instrucciones[i].tipo === TIPO_INSTRUCCION.EXEC){
             contadorExec++;
         }
-    }
+    } 
     if(contadorExec==0){
         return 'Error: No se ha detectado la sentencia EXEC'
     }

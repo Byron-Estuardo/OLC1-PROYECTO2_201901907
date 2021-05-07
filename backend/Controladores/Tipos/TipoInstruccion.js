@@ -10,6 +10,7 @@ const TIPO_INSTRUCCION = {
     SWITCH:			    'SWITCH',
 	SWITCH_OP:		    'SWITCH_OP',
 	SWITCH_DEF:		    'SWITCH_DEF',
+    DOWHILE:            'INSTR_DO_WHILE',
     FOR:                'INSTR_FOR',
     DEC_METODO:         'DEC_METODO',
     INCREMENTO:         'INSTR_INCREMENTO',

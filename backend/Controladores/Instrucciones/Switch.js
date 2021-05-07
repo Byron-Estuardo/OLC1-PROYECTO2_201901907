@@ -7,6 +7,8 @@ const TIPO_OPERACION = require("../Tipos/TipoOperacion");
 function SentenciaSwitch(_instruccion, _ambito){
     var mensaje = ""
     var ejecutado = false;
+    var hayBreak = false
+    var hayContinue = false
     for(var elemento of _instruccion.casos){
         const rest = Operacion(Instruccion.nuevaOperacionBinaria(_instruccion.expresion, elemento.expresion, TIPO_OPERACION.IGUALIGUAL), _ambito)
         if(rest.tipo == TIPO_DATO.BANDERA){
@@ -14,15 +16,33 @@ function SentenciaSwitch(_instruccion, _ambito){
                 ejecutado = true;
                 var nuevoAmbito = new Ambito(_ambito)
                 const Bloque = require('./Bloque')
+                var ejec = Bloque(elemento.instrucciones, nuevoAmbito)
+                mensaje += ejec.cadena
+                hayBreak = ejec.hayBreak;
+                hayContinue = ejec.hayContinue;
+                if(hayBreak){
+                    return{
+                        hayBreak: false,
+                        cadena: mensaje
+                    }
+                }
+                else if(hayContinue){
+                    return{
+                        hayContinue: false,
+                        cadena: mensaje
+                    }
+                }
                 mensaje+=Bloque(elemento.instrucciones, nuevoAmbito)
-                if (mensaje != null){
-                    console.log("NO NULL" + mensaje)  
-                    return mensaje
+                if (ejec.cadena != ""){
+                    return{
+                        hayBreak: hayBreak,
+                        hayContinue: hayContinue,
+                        cadena: mensaje
+                    }
                 }
                 else{
                     return
-                }
-                    
+                } 
             }
             
         }
@@ -33,8 +53,27 @@ function SentenciaSwitch(_instruccion, _ambito){
     if (_instruccion.bloqueSw && !ejecutado){
         var nuevoAmbito = new Ambito(_ambito)
         const Bloque = require('./Bloque')
-        mensaje+=Bloque(_instruccion.bloqueSw, nuevoAmbito)
-        return mensaje
+        var ejec = Bloque(elemento.instrucciones, nuevoAmbito)
+        mensaje += ejec.cadena
+        hayBreak = ejec.hayBreak;
+        hayContinue = ejec.hayContinue;
+        if(hayBreak){
+            return{
+                hayBreak: false,
+                cadena: mensaje
+            }
+        }
+        else if(hayContinue){
+            return{
+                hayContinue: false,
+                cadena: mensaje
+            }
+        }
+        return{
+            hayBreak: hayBreak,
+            hayContinue: hayContinue,
+            cadena: mensaje
+        }
     }
     
     return `Error: No es una condicion válida para el switch... Linea: ${_instruccion.linea} Columna: ${_instruccion.columna}`

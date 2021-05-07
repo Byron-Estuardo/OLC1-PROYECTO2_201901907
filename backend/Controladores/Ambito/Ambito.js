@@ -3,9 +3,8 @@ class Ambito {
         this.anterior = _anterior
         this.tablaSimbolos = new Map();
         this.tablaMetodos = new Map();
-//        console.log(this.tablaSimbolos)
     }
-
+ 
     addSimbolo(_s, _simbolo) {
         this.tablaSimbolos.set(_s.toLowerCase(), _simbolo)
     }
@@ -59,9 +58,6 @@ class Ambito {
         return false
     }
     actualizar(_s, _simbolo) {
-        //console.log("Actualizar")
-        //console.log(_s)
-        //console.log(_simbolo)
         for (let e = this; e != null; e = e.anterior) {
             var encontrado = e.tablaSimbolos.get(_s.toLowerCase());
             if (encontrado != null) {
