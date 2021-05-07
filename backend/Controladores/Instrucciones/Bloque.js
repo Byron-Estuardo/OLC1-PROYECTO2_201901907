@@ -139,7 +139,7 @@ function Bloque(_instrucciones, _ambito){
             hayContinue = ejec.hayContinue
             //hayBreak = false
             //hayContinue = false
-            console.log("Switch salida: "+mensaje)
+            //console.log("Switch salida: "+mensaje)
             if(mensaje!=null){
                 cadena+=mensaje
             }

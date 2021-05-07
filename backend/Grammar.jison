@@ -245,8 +245,8 @@ LLAMADA_METODO: identificador parA parC ptcoma                  { $$ = INSTRUCCI
               | identificador parA LISTAVALORES parC ptcoma     { $$ = INSTRUCCION.nuevaLlamada($1, $3, this._$.first_line,this._$.first_column+1); }
 ;
 //Funciones
-FUNC : TIPO identificador parA parC llaveA OPCIONESCUERPO llaveC                      {$$ = INSTRUCCION.nuevaFuncion($1, $2,null, $5, this._$.first_line,this._$.first_column+1)}
-     | TIPO identificador parA LISTAPARAMETROS parC llaveA OPCIONESCUERPO llaveC      {$$ = INSTRUCCION.nuevaFuncion($1, $2, $3, $6, this._$.first_line,this._$.first_column+1)}
+FUNC : TIPO identificador parA parC llaveA OPCIONESCUERPO llaveC                      {$$ = INSTRUCCION.nuevaFuncion($1, $2, null, $6, this._$.first_line,this._$.first_column+1)}
+     | TIPO identificador parA LISTAPARAMETROS parC llaveA OPCIONESCUERPO llaveC      {$$ = INSTRUCCION.nuevaFuncion($1, $2, $4, $7, this._$.first_line,this._$.first_column+1)}
 ;   
 //declarar metodo
 DEC_MET : Rvoid identificador parA parC llaveA OPCIONESMETODO llaveC                      {$$ = INSTRUCCION.nuevoMetodo($2, null, $6, this._$.first_line,this._$.first_column+1)}

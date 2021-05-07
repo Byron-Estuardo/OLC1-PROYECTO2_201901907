@@ -22,6 +22,15 @@ class Ambito {
         }
         return null
     }
+    getSimboloPa(_s) { //(hola, clase simbolo)
+        for (let e = e.anterior; e != null; e = e.anterior) {
+            var encontrado = e.tablaSimbolos.get(_s.toLowerCase()) //hola<=>HoLA
+            if (encontrado != null) {
+                return encontrado
+            }
+        }
+        return null
+    }
 
     getMetodo(_s) { //(hola, clase simbolo)
         for (let e = this; e != null; e = e.anterior) {

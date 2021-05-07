@@ -173,8 +173,8 @@ function suma(_opIzq, _opDer, _ambito){
         if(tipoRes === TIPO_DATO.CADENA){
             
                 const resultado = String(opIzq.valor) + String(opDer.valor);
-                console.log("CADENASSS: REsultado ")
-                console.log(resultado)
+                //console.log("CADENASSS: REsultado ")
+                //console.log(resultado)
                 return{
                     valor: resultado,
                     tipo: tipoRes,

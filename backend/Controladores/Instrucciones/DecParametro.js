@@ -3,11 +3,18 @@ const TIPO_DATO = require("../Tipos/TipoDato");
 const Operacion = require("../Operacion/Operacion");
 
 function DecParametro(_instruccion, _ambito){
+    //console.log(_ambito)
     if(_instruccion.tipo_dato === TIPO_DATO.ENTERO){
         var valor = 0
         if(_instruccion.valor != null){
+            console.log("_ambito.anterior")
+            console.log(_ambito.anterior)
+            console.log("_ambito")
+            console.log(_ambito)
             var op = Operacion(_instruccion.valor, _ambito)
             tipo = op.tipo;
+            console.log("OPERACION")
+            console.log(op)
             if(tipo === TIPO_DATO.ENTERO){
                 valor = parseInt(op.valor);
             } 
@@ -19,6 +26,7 @@ function DecParametro(_instruccion, _ambito){
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
+        console.log("ingreso = " + valor)
         _ambito.addSimbolo(nuevoSimbolo.id, nuevoSimbolo)
         //console.log(_ambito)
         return null
@@ -39,6 +47,7 @@ function DecParametro(_instruccion, _ambito){
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
+        console.log("ingreso = " + valor)
         _ambito.addSimbolo(nuevoSimbolo.id, nuevoSimbolo)
         //console.log(_ambito)
         return null
@@ -55,6 +64,7 @@ function DecParametro(_instruccion, _ambito){
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
+        console.log("ingreso = " + valor)
         _ambito.addSimbolo(nuevoSimbolo.id, nuevoSimbolo)
         return null
         //console.log(_ambito)
@@ -62,17 +72,20 @@ function DecParametro(_instruccion, _ambito){
     else if(_instruccion.tipo_dato === TIPO_DATO.CARACTER){
         var valor = '' // en caso sea sin asignación inicializamos la variable
         //si es una declaracion con asignacion
+        console.log(_instruccion.valor)
         if(_instruccion.valor!=null){
+            console.log(_ambito)
             op = Operacion(_instruccion.valor, _ambito)
             valor = op.valor //casteamos a cadena
-            console.log("DECLARACION")
-            console.log(valor)
+            console.log("OPERACION")
+            console.log(op)
         }
         //verificamos si ya existe
         const nuevoSimbolo = new Simbolo(_instruccion.id, valor, TIPO_DATO.CARACTER, _instruccion.linea, _instruccion.columna)
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
+        console.log("ingreso = " + valor)
         _ambito.addSimbolo(nuevoSimbolo.id, nuevoSimbolo)
         return null
         //console.log(_ambito)
@@ -96,6 +109,8 @@ function DecParametro(_instruccion, _ambito){
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
+        console.log("ingreso = " + valor)
+
         _ambito.addSimbolo(nuevoSimbolo.id, nuevoSimbolo)
         return null
         //console.log(_ambito)
