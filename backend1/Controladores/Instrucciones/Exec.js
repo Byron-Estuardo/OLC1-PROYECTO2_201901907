@@ -30,8 +30,7 @@ function Exec(_instruccion, _ambito) {
                     }
                 } 
                 if (error) {
-                    console.log("ERROR")
-                    console.log(error)
+                    //console.log(error)
                     return cadena
                 }
                 const Bloque = require("./Bloque")
@@ -47,26 +46,34 @@ function Exec(_instruccion, _ambito) {
                 if (que == "METODO"){
                     return mensaje
                 }
-                else if(que == "FUNCION"){
-                   
+                else{
+                    //console.log(ejec)
                     if(metodoEjecutar.tipo == ejec.respuesta.tipo){
-                        mensaje += ejec.cadena + "\n" + ejec.respuesta.valor
-                        return mensaje
+                        console.log("DENTRO")
+                        mensaje += ejec.cadena 
+                        mensaje += ejec.respuesta.valor
+                        console.log(mensaje)
+                        return {
+                            valor: mensaje,
+                            tipo: ejec.respuesta.tipo
+                        }
                     }
                     else{
-                        return mensaje
+                        mensaje += ejec.cadena 
+                        
+                        return {
+                            valor: mensaje,
+                            tipo: ejec.respuesta.tipo
+                        }
                     }
-                    
                 }
-                
             }
             else {
                 return `Error: Faltan valores para el metodo ${_instruccion.nombre}... Linea: ${_instruccion.linea} Columna: ${_instruccion.columna}`
             }
         }
         else {
-            console.log("elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-            console.log(metodoEjecutar)
+            //console.log("elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
             const Bloque = require("./Bloque")
             var ejec = Bloque(metodoEjecutar.instrucciones, nuevoAmbito)
             var mensaje = ejec.cadena
@@ -79,9 +86,26 @@ function Exec(_instruccion, _ambito) {
             if (que == "METODO"){
                 return mensaje
             }
-            else if(que == "FUNCION"){
-                mensaje += ejec.cadena + "\n" +ejec.respuesta
-                return mensaje
+            else{
+                //console.log(ejec)
+                if(metodoEjecutar.tipo == ejec.respuesta.tipo){
+                    console.log("DENTRO")
+                    mensaje += ejec.cadena 
+                    mensaje += ejec.respuesta.valor
+                    console.log(mensaje)
+                    return {
+                        valor: mensaje,
+                        tipo: ejec.respuesta.tipo
+                    }
+                }
+                else{
+                    mensaje += ejec.cadena 
+                    
+                    return {
+                        valor: mensaje,
+                        tipo: ejec.respuesta.tipo
+                    }
+                }
             }
         }
     }

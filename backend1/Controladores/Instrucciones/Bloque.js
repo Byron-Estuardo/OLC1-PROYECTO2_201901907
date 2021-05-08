@@ -38,17 +38,7 @@ function Bloque(_instrucciones, _ambito){
                 cadena: cadena
             }
         }
-        else if(instruccion.tipo === TIPO_INSTRUCCION.RETURN){
-            hayReturn = true
-            var ejec = Retorno(instruccion, _ambito)
-            respuesta = ejec
-            return {
-                respuesta: respuesta,
-                hayReturn: hayReturn
-            }
-        }
         else if(instruccion.tipo === TIPO_INSTRUCCION.IMPRIMIR){
-            console.log(instruccion.tipo)
             var mensaje = Print(instruccion, _ambito)
             if(mensaje!=null){
                 cadena+=mensaje + '\n'
@@ -100,7 +90,6 @@ function Bloque(_instrucciones, _ambito){
             hayContinue = ejec.hayContinue
             hayReturn = ejec.hayReturn
             respuesta = ejec.respuesta
-            console.log(ejec)
             if(mensaje!=null){
                 cadena+=mensaje
             }
@@ -144,15 +133,23 @@ function Bloque(_instrucciones, _ambito){
                 cadena: cadena
             }
         }
-        
-    }); 
+        else if(instruccion.tipo === TIPO_INSTRUCCION.RETURN){
+            hayReturn = true
+            var ejec = Retorno(instruccion, _ambito)
+            respuesta = ejec
+            return {
+                respuesta: respuesta,
+                hayReturn: hayReturn
+            }
+        }
+    });
     return{
         respuesta: respuesta,
         hayBreak: hayBreak,
         hayReturn: hayReturn,
         hayContinue: hayContinue,
         cadena: cadena
-    }  
+    } 
     
 }
 

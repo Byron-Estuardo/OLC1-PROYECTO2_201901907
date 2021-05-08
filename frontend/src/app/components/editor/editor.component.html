@@ -11,7 +11,13 @@
                 <button (click)="analizar()" type="button" class="btn btn-success">Ejecutar</button>
             </li>
             <li class="nav-item">
-                <button (click)="imprimir()" type="button" class="btn btn-success">Arbol AST</button>
+                <input style="display:none;" accept=".ty" type="file" (change)="abrir($event)" #archivo>
+                <button (click)="archivo.click()" type="button" class="btn btn-success">Abrir</button>
+            </li>
+            <li class="nav-item">
+                <button (click)="guardar()" type="button" class="btn btn-success">Guardar</button>
+            <li class="nav-item">
+                <button (click)="printast()" type="button" class="btn btn-success">Arbol AST</button>
             </li>
         </ul>
     </div>

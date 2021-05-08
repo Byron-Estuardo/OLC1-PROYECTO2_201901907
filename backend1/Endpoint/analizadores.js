@@ -18,21 +18,20 @@ module.exports=(parser, app)=>{
             var tabla = sim
             //var grafica = new Graficador(ast);
             //var dot = grafica.graficar()
-            //console.log(dot)
-            console.log("AST PRRO" )
-            console.log(String(ast))
+            //console.log("AST PRRO" )
+            //console.log(ast)
             var resultado = {
-                arbol: String(ast),
+                arbol: ast,
                 consola: cadena ,
                 tab: tabla
             }
-            /*fs.writeFile('../Controladores/REPORTES/AST.dot', dot, function(error){
+            /*fs.writeFile('/backend/Controladores/REPORTES/AST.dot', dot, function(error){
                 if(error){
                     console.log(error)
                 }
             });
             const { exec } = require('child_process')
-            exec('dot -Tpng AST.dot -o AST.png', (error, stdout, stderr)=>{
+            exec('dot -Tpng /backend/Controladores/REPORTES/AST.dot -o /backend/Controladores/REPORTES/AST.png', (error, stdout, stderr)=>{
                 if(error){
                     console.log(error.message)
                 }

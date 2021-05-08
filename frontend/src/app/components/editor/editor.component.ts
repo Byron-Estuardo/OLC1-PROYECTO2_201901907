@@ -33,7 +33,7 @@ export class EditorComponent implements OnInit {
     autoIndent:"full",
     readOnly:true
   };
-
+  arbolito = "";
   code = "";
   editorTexto = new FormControl('');
   console = "";
@@ -79,6 +79,44 @@ export class EditorComponent implements OnInit {
     console.log(this.consola.value)
     console.log(this.editorTexto.value)
   }
+  abrir(eve:any)
+  {
+    let a =eve.target.files[0]
+    let text=""
+    if(a){
+      let reader=new FileReader()
+        reader.onload=ev=>{
+        const resultado=ev.target?.result
+        text=String(resultado)
+        console.log(resultado)
+        console.log(text)
+        this.code=text.toString();
+
+      }
+      reader.readAsText(a)
+    }
+  }
+
+  guardar()
+  {
+    this.consola.setValue("");
+    if(this.editorTexto.value)
+    {
+      this.escribir(this.editorTexto.value,"Calificacion.ty","text/plain");
+    }
+    else
+    {
+      this.consola.setValue("ERROR: No se ha ejecutado ningun cambio en el archivo...");
+    }
+  }
+  escribir(content:string, fileName:string,contenType:string)
+  {
+    var a = document.createElement("a");
+    var archivo = new Blob([content], {type: contenType});
+    a.href = URL.createObjectURL(archivo);
+    a.download = fileName;
+    a.click();
+  }
 
   analizar(){
     var texto = {
@@ -88,9 +126,17 @@ export class EditorComponent implements OnInit {
       console.log(res)
       this.consola.setValue(res.consola);
       this.simbolo = res.tab
+      console.log(res.arbol)
+      this.arbolito = res.arbol
+
     }, err=>{
       console.log(err)
     });
+  }
+
+  printast(){
+    this.consola.setValue(this.arbolito);
+
   }
 
 }

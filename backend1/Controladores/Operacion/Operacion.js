@@ -10,7 +10,6 @@ const TIPO_INSTRUCCION = require("../Tipos/TipoInstruccion");
 const Exec = require("../Instrucciones/Exec");
 
 function Operacion(_expresion, _ambito){
-    
     if(_expresion.tipo === TIPO_VALOR.DECIMAL  || _expresion.tipo === TIPO_VALOR.ENTERO || 
         _expresion.tipo === TIPO_VALOR.CARACTER || _expresion.tipo === TIPO_VALOR.BANDERA ||
        _expresion.tipo === TIPO_VALOR.CADENA || _expresion.tipo === TIPO_VALOR.IDENTIFICADOR){
@@ -41,8 +40,6 @@ function Operacion(_expresion, _ambito){
         return Ternar(_expresion, _ambito)
     }
     else if(_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO){
-        console.log("Antes de entrar")
-        console.log(_expresion)
         return Exec(_expresion, _ambito)
     }
 }

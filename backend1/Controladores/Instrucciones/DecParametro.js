@@ -1,6 +1,6 @@
 const Simbolo = require("../Ambito/Simbolo");
 const TIPO_DATO = require("../Tipos/TipoDato");
-const Operacion = require("../Operacion/Operacion");
+
 
 function DecParametro(_instruccion, _ambito){
     //console.log(_ambito)
@@ -11,6 +11,7 @@ function DecParametro(_instruccion, _ambito){
             console.log(_ambito.anterior)
             console.log("_ambito")
             console.log(_ambito)*/
+            const Operacion = require("../Operacion/Operacion");
             var op = Operacion(_instruccion.valor, _ambito.anterior)
             tipo = op.tipo;
             //console.log("OPERACION")
@@ -34,11 +35,8 @@ function DecParametro(_instruccion, _ambito){
     else if(_instruccion.tipo_dato === TIPO_DATO.DECIMAL){
         var valor = 0.0
         if(_instruccion.valor != null){
-            console.log("Instruccion _____")
-            console.log(_instruccion.valor)
+            const Operacion = require("../Operacion/Operacion");
             var op = Operacion(_instruccion.valor, _ambito.anterior)
-            
-
             tipo = op.tipo;
             if(tipo === TIPO_DATO.DECIMAL){
                 valor = parseFloat(op.valor);
@@ -60,6 +58,7 @@ function DecParametro(_instruccion, _ambito){
         var valor = "" // en caso sea sin asignación inicializamos la variable
         //si es una declaracion con asignacion
         if(_instruccion.valor!=null){
+            const Operacion = require("../Operacion/Operacion");
             op = Operacion(_instruccion.valor, _ambito.anterior)
             valor = String(op.valor) //casteamos a cadena
         }
@@ -79,6 +78,7 @@ function DecParametro(_instruccion, _ambito){
         //console.log(_instruccion.valor)
         if(_instruccion.valor!=null){
            //console.log(_ambito)
+           const Operacion = require("../Operacion/Operacion");
             op = Operacion(_instruccion.valor, _ambito.anterior)
             valor = op.valor //casteamos a cadena
            // console.log("OPERACION")
@@ -98,6 +98,7 @@ function DecParametro(_instruccion, _ambito){
         var valor = false // en caso sea sin asignación inicializamos la variable
         //si es una declaracion con asignacion
         if(_instruccion.valor!=null){
+            const Operacion = require("../Operacion/Operacion");
             op = Operacion(_instruccion.valor, _ambito.anterior)
             tipo = op.tipo
             //verificamos que el valor a asignar sea del mismo tipo

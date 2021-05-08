@@ -19,7 +19,7 @@ class Graficador{
         this.contador = 1;
         this.recorrerAST("Nodo0", this.raiz)
         this.grafo += "}"
-        return this.grafo
+        returnthis.grafo
     }
     recorrerAST(_padre, _hijo){
         _hijo.forEach(instruccion => {

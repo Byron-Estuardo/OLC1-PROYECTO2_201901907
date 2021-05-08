@@ -2,22 +2,16 @@ const Simbolo = require("../Ambito/Simbolo");
 const TIPO_DATO = require("../Tipos/TipoDato");
 const Operacion = require("../Operacion/Operacion");
 
-function DecParametro(_instruccion, _ambito){
-    //console.log(_ambito)
+function Declaracion(_instruccion, _ambito){
+    //console.log()
     if(_instruccion.tipo_dato === TIPO_DATO.ENTERO){
         var valor = 0
-        if(_instruccion.valor != null){/*
-            console.log("_ambito.anterior")
-            console.log(_ambito.anterior)
-            console.log("_ambito")
-            console.log(_ambito)*/
-            var op = Operacion(_instruccion.valor, _ambito.anterior)
-            tipo = op.tipo;
-            //console.log("OPERACION")
-            //console.log(op)
-            if(tipo === TIPO_DATO.ENTERO){
+        if(_instruccion.valor != null){
+            var op = Operacion(_instruccion.valor, _ambito)
+            tipo = op.tipo; 
+            if(tipo === TIPO_DATO.ENTERO || tipo === TIPO_DATO.DECIMAL){
                 valor = parseInt(op.valor);
-            } 
+            }
             else {
                 "Error: No es posible asignar un valor de tipo "+tipo+" a la variable \n'"+ _instruccion.id +"' que es de tipo "+TIPO_DATO.ENTERO+"... Linea: "+_instruccion.linea+" Columna: "+ _instruccion.columna;
             }
@@ -26,23 +20,18 @@ function DecParametro(_instruccion, _ambito){
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
-        //console.log("ingreso = " + valor)
         _ambito.addSimbolo(nuevoSimbolo.id, nuevoSimbolo)
         //console.log(_ambito)
         return null
-    }
+    } 
     else if(_instruccion.tipo_dato === TIPO_DATO.DECIMAL){
         var valor = 0.0
         if(_instruccion.valor != null){
-            console.log("Instruccion _____")
-            console.log(_instruccion.valor)
-            var op = Operacion(_instruccion.valor, _ambito.anterior)
-            
-
+            var op = Operacion(_instruccion.valor, _ambito)
             tipo = op.tipo;
-            if(tipo === TIPO_DATO.DECIMAL){
+            if(tipo === TIPO_DATO.DECIMAL || tipo === TIPO_DATO.ENTERO){
                 valor = parseFloat(op.valor);
-            } 
+            }
             else {
                 "Error: No es posible asignar un valor de tipo "+tipo+" a la variable \n'"+ _instruccion.id +"' que es de tipo "+TIPO_DATO.DECIMAL+"... Linea: "+_instruccion.linea+" Columna: "+ _instruccion.columna;
             }
@@ -51,7 +40,6 @@ function DecParametro(_instruccion, _ambito){
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
-        //console.log("ingreso = " + valor)
         _ambito.addSimbolo(nuevoSimbolo.id, nuevoSimbolo)
         //console.log(_ambito)
         return null
@@ -60,7 +48,7 @@ function DecParametro(_instruccion, _ambito){
         var valor = "" // en caso sea sin asignación inicializamos la variable
         //si es una declaracion con asignacion
         if(_instruccion.valor!=null){
-            op = Operacion(_instruccion.valor, _ambito.anterior)
+            op = Operacion(_instruccion.valor, _ambito)
             valor = String(op.valor) //casteamos a cadena
         }
         //verificamos si ya existe
@@ -68,7 +56,6 @@ function DecParametro(_instruccion, _ambito){
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
-        //console.log("ingreso = " + valor)
         _ambito.addSimbolo(nuevoSimbolo.id, nuevoSimbolo)
         return null
         //console.log(_ambito)
@@ -76,20 +63,17 @@ function DecParametro(_instruccion, _ambito){
     else if(_instruccion.tipo_dato === TIPO_DATO.CARACTER){
         var valor = '' // en caso sea sin asignación inicializamos la variable
         //si es una declaracion con asignacion
-        //console.log(_instruccion.valor)
         if(_instruccion.valor!=null){
-           //console.log(_ambito)
-            op = Operacion(_instruccion.valor, _ambito.anterior)
+            op = Operacion(_instruccion.valor, _ambito)
             valor = op.valor //casteamos a cadena
-           // console.log("OPERACION")
-            //console.log(op)
+            console.log("DECLARACION")
+            console.log(valor)
         }
         //verificamos si ya existe
-        const nuevoSimbolo = new Simbolo(_instruccion.id, valor, TIPO_DATO.CARACTER, _instruccion.linea, _instruccion.columna)
+        const nuevoSimbolo = new Simbolo(_instruccion.id, valor, TIPO_DATO.CADENA, _instruccion.linea, _instruccion.columna)
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
-        //console.log("ingreso = " + valor)
         _ambito.addSimbolo(nuevoSimbolo.id, nuevoSimbolo)
         return null
         //console.log(_ambito)
@@ -98,7 +82,7 @@ function DecParametro(_instruccion, _ambito){
         var valor = false // en caso sea sin asignación inicializamos la variable
         //si es una declaracion con asignacion
         if(_instruccion.valor!=null){
-            op = Operacion(_instruccion.valor, _ambito.anterior)
+            op = Operacion(_instruccion.valor, _ambito)
             tipo = op.tipo
             //verificamos que el valor a asignar sea del mismo tipo
             if(tipo===TIPO_DATO.BANDERA){
@@ -113,12 +97,10 @@ function DecParametro(_instruccion, _ambito){
         if(_ambito.existeSimboloAmbitoActual(nuevoSimbolo.id)!=false){
             return "Error: La variable '"+ nuevoSimbolo.id +"' ya existe... Linea: "+nuevoSimbolo.linea+" Columna: "+ nuevoSimbolo.columna;
         }
-       //console.log("ingreso = " + valor)
-
         _ambito.addSimbolo(nuevoSimbolo.id, nuevoSimbolo)
         return null
         //console.log(_ambito)
     }
 }
 
-module.exports = DecParametro
+module.exports = Declaracion
