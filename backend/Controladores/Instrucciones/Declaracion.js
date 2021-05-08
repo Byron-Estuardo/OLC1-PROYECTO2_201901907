@@ -8,8 +8,8 @@ function Declaracion(_instruccion, _ambito){
         var valor = 0
         if(_instruccion.valor != null){
             var op = Operacion(_instruccion.valor, _ambito)
-            tipo = op.tipo;
-            if(tipo === TIPO_DATO.ENTERO){
+            tipo = op.tipo; 
+            if(tipo === TIPO_DATO.ENTERO || tipo === TIPO_DATO.DECIMAL){
                 valor = parseInt(op.valor);
             }
             else {
@@ -23,13 +23,13 @@ function Declaracion(_instruccion, _ambito){
         _ambito.addSimbolo(nuevoSimbolo.id, nuevoSimbolo)
         //console.log(_ambito)
         return null
-    }
+    } 
     else if(_instruccion.tipo_dato === TIPO_DATO.DECIMAL){
         var valor = 0.0
         if(_instruccion.valor != null){
             var op = Operacion(_instruccion.valor, _ambito)
             tipo = op.tipo;
-            if(tipo === TIPO_DATO.DECIMAL){
+            if(tipo === TIPO_DATO.DECIMAL || tipo === TIPO_DATO.ENTERO){
                 valor = parseFloat(op.valor);
             }
             else {

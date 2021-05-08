@@ -1,7 +1,7 @@
 const TIPO_INSTRUCCION = {
     IMPRIMIR:           'INSTR_IMPRIMIR',
     DECLARACION:        'INSTR_DECLARACION',
-    FUNCION:            'INSTR_FUNCION',
+    FUNCION:            'DEC_FUNCION',
     ASIGNACION:         'INSTR_ASIGNACION',
     WHILE:              'INSTR_WHILE',
 	IF:                 'INSTR_IF',

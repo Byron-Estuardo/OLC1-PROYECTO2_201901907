@@ -17,7 +17,7 @@ import { AnalizarService } from 'src/app/services/analizar/analizar.service';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
-
+  simbolo: any[] = [];
   @ViewChild(MonacoEditorComponent, { static: false })
   monacoComponent: MonacoEditorComponent = new MonacoEditorComponent(this.monacoLoaderService);
   editorOptions: MonacoEditorConstructionOptions = {
@@ -87,6 +87,7 @@ export class EditorComponent implements OnInit {
     this.analizarService.ejecutar(texto).subscribe((res:any)=>{
       console.log(res)
       this.consola.setValue(res.consola);
+      this.simbolo = res.tab
     }, err=>{
       console.log(err)
     });

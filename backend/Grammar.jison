@@ -152,6 +152,7 @@ CUERPO: DEC_VAR             { $$ = $1 }
       | LLAMADA_METODO      { $$ = $1 }
       | FUNCIONESNATIVAS    { $$ = $1 }
       | CAST                { $$ = $1 }
+      | FUNC                { $$ = $1 }
 ;
 //Funciones nativas
 FUNCIONESNATIVAS: lower parA EXPRESION parC ptcoma      { $$ = INSTRUCCION.nuevoFNat( $3, TIPO_OPERACION.LOWER, this._$.first_line,this._$.first_column+1 ); }
@@ -212,9 +213,16 @@ DOWHILE: Rdoo llaveA OPCIONESCUERPO llaveC Rwhile parA EXPRESION parC ptcoma    
 RSIF: Rif parA EXPRESION parC llaveA OPCIONESCUERPO llaveC                                    { $$ = new INSTRUCCION.nuevoIf($3, $6, null, this._$.first_line,this._$.first_column+1); }
     | Rif parA EXPRESION parC llaveA OPCIONESCUERPO llaveC Relse RSIF                         { $$ = new INSTRUCCION.nuevoIf($3, $6, Array($9), this._$.first_line,this._$.first_column+1); }
     | Rif parA EXPRESION parC llaveA OPCIONESCUERPO llaveC Relse llaveA OPCIONESCUERPO llaveC { $$ = new INSTRUCCION.nuevoIf($3, $6, $10, this._$.first_line,this._$.first_column+1); }
+    | Rif parA LLAMADA_METODO1 parC llaveA OPCIONESCUERPO llaveC                                    { $$ = new INSTRUCCION.nuevoIf($3, $6, null, this._$.first_line,this._$.first_column+1); }
+    | Rif parA LLAMADA_METODO1 parC llaveA OPCIONESCUERPO llaveC Relse RSIF                         { $$ = new INSTRUCCION.nuevoIf($3, $6, Array($9), this._$.first_line,this._$.first_column+1); }
+    | Rif parA LLAMADA_METODO1 parC llaveA OPCIONESCUERPO llaveC Relse llaveA OPCIONESCUERPO llaveC { $$ = new INSTRUCCION.nuevoIf($3, $6, $10, this._$.first_line,this._$.first_column+1); }
     | Rif parA EXPRESION parC llaveA  llaveC                                                    { $$ = new INSTRUCCION.nuevoIf($3, null, null, this._$.first_line,this._$.first_column+1); }
     | Rif parA EXPRESION parC llaveA  llaveC Relse RSIF                                         { $$ = new INSTRUCCION.nuevoIf($3, null, Array($9), this._$.first_line,this._$.first_column+1); }
     | Rif parA EXPRESION parC llaveA  llaveC Relse llaveA  llaveC                               { $$ = new INSTRUCCION.nuevoIf($3, null, null, this._$.first_line,this._$.first_column+1); }
+    | Rif parA LLAMADA_METODO1 parC llaveA  llaveC                                                    { $$ = new INSTRUCCION.nuevoIf($3, null, null, this._$.first_line,this._$.first_column+1); }
+    | Rif parA LLAMADA_METODO1 parC llaveA  llaveC Relse RSIF                                         { $$ = new INSTRUCCION.nuevoIf($3, null, Array($9), this._$.first_line,this._$.first_column+1); }
+    | Rif parA LLAMADA_METODO1 parC llaveA  llaveC Relse llaveA  llaveC                               { $$ = new INSTRUCCION.nuevoIf($3, null, null, this._$.first_line,this._$.first_column+1); }
+    
 ;
 //Switch
 SWITCHCASE: Rswitch parA EXPRESION parC llaveA LISTACASOS llaveC                                            { $$ = INSTRUCCION.nuevoSwitch($3, $6, this._$.first_line,this._$.first_column+1);}
@@ -243,6 +251,10 @@ LISTAVALORES: LISTAVALORES coma EXPRESION                   {$1.push($3); $$=$1}
 //llamar metodo
 LLAMADA_METODO: identificador parA parC ptcoma                  { $$ = INSTRUCCION.nuevaLlamada($1, null, this._$.first_line,this._$.first_column+1); }
               | identificador parA LISTAVALORES parC ptcoma     { $$ = INSTRUCCION.nuevaLlamada($1, $3, this._$.first_line,this._$.first_column+1); }
+;
+//llamar metodo 1
+LLAMADA_METODO1: identificador parA parC                  { $$ = INSTRUCCION.nuevaLlamada($1, null, this._$.first_line,this._$.first_column+1); }
+              | identificador parA LISTAVALORES parC     { $$ = INSTRUCCION.nuevaLlamada($1, $3, this._$.first_line,this._$.first_column+1); }
 ;
 //Funciones
 FUNC : TIPO identificador parA parC llaveA OPCIONESCUERPO llaveC                      {$$ = INSTRUCCION.nuevaFuncion($1, $2, null, $6, this._$.first_line,this._$.first_column+1)}
@@ -281,6 +293,7 @@ CUERPOMETODO: DEC_VAR             { $$ = $1 }
             | LLAMADA_METODO      { $$ = $1 }
             | FUNCIONESNATIVAS    { $$ = $1 }
             | CAST                { $$ = $1 }
+            | FUNC                { $$ = $1 }
 ;
 //break
 BREA: Rbreak ptcoma         { $$ = INSTRUCCION.nuevoBreak(this._$.first_line,this._$.first_column+1); }
@@ -291,17 +304,8 @@ CONTINU: Rcontinue ptcoma   { $$ = INSTRUCCION.nuevoContinue(this._$.first_line,
 //return
 RETU: Rreturn ptcoma            { $$ = INSTRUCCION.nuevoReturn(null, this._$.first_line,this._$.first_column+1); }
     | Rreturn EXPRESION ptcoma  { $$ = INSTRUCCION.nuevoReturn($2, this._$.first_line,this._$.first_column+1); }
+    | Rreturn LLAMADA_METODO1 ptcoma  { $$ = INSTRUCCION.nuevoReturn($2, this._$.first_line,this._$.first_column+1); }
 ;     
-/*
-RSIF: Rif parA EXPRESION parC llaveA OPCIONESCUERPO llaveC                                    { $$ = new INSTRUCCION.nuevoIf($3, $6, null, this._$.first_line,this._$.first_column+1); }
-    | Rif parA EXPRESION parC llaveA OPCIONESCUERPO llaveC Relse RSIF                         { $$ = new INSTRUCCION.nuevoIf($3, $6, Array($9), this._$.first_line,this._$.first_column+1); }
-    | Rif parA EXPRESION parC llaveA OPCIONESCUERPO llaveC Relse llaveA OPCIONESCUERPO llaveC { $$ = new INSTRUCCION.nuevoIf($3, $6, $10, this._$.first_line,this._$.first_column+1); }
-    | Rif parA EXPRESION parC llaveA  llaveC                                                    { $$ = new INSTRUCCION.nuevoIf($3, null, null, this._$.first_line,this._$.first_column+1); }
-    | Rif parA EXPRESION parC llaveA  llaveC Relse RSIF                                         { $$ = new INSTRUCCION.nuevoIf($3, null, Array($9), this._$.first_line,this._$.first_column+1); }
-    | Rif parA EXPRESION parC llaveA  llaveC Relse llaveA  llaveC                               { $$ = new INSTRUCCION.nuevoIf($3, null, null, this._$.first_line,this._$.first_column+1); }
-;
-*/
-
 //Expresiones
 EXPRESION: EXPRESION Rternario EXPRESION dospts EXPRESION   { $$ = INSTRUCCION.nuevoTernario(TIPO_OPERACION.TERNARIO, $1, $3, $5,this._$.first_line,this._$.first_column+1); }
          | EXPRESION mass EXPRESION                         { $$ = INSTRUCCION.nuevaOperacionBinaria($1,$3, TIPO_OPERACION.SUMA,this._$.first_line,this._$.first_column+1); }
@@ -328,12 +332,12 @@ EXPRESION: EXPRESION Rternario EXPRESION dospts EXPRESION   { $$ = INSTRUCCION.n
          | Rfalse                                           { $$ = INSTRUCCION.nuevoValor($1, TIPO_VALOR.BANDERA, this._$.first_line,this._$.first_column+1); }
          | cadenaa                                          { $$ = INSTRUCCION.nuevoValor($1, TIPO_VALOR.CADENA, this._$.first_line,this._$.first_column+1); }
          | identificador                                    { $$ = INSTRUCCION.nuevoValor($1, TIPO_VALOR.IDENTIFICADOR, this._$.first_line,this._$.first_column+1); }
-         | lower parA EXPRESION parC %prec casts            { $$ = INSTRUCCION.nuevoFNat( $3, TIPO_OPERACION.LOWER, this._$.first_line,this._$.first_column+1 ); }
-         | upper parA EXPRESION parC %prec casts            { $$ = INSTRUCCION.nuevoFNat( $3, TIPO_OPERACION.UPPER, this._$.first_line,this._$.first_column+1 ); }
-         | Rtostring parA EXPRESION parC %prec casts        { $$ = INSTRUCCION.nuevoFNat( $3, TIPO_OPERACION.TSTRING, this._$.first_line,this._$.first_column+1 ); }
-         | Rtypeof parA EXPRESION parC %prec casts          { $$ = INSTRUCCION.nuevoFNat( $3, TIPO_OPERACION.TYPEOF, this._$.first_line,this._$.first_column+1 ); }
-         | Rround parA EXPRESION parC  %prec casts          { $$ = INSTRUCCION.nuevoFNat( $3, TIPO_OPERACION.ROUND, this._$.first_line,this._$.first_column+1 ); }
-         | Rtruncate parA EXPRESION parC %prec casts        { $$ = INSTRUCCION.nuevoFNat( $3, TIPO_OPERACION.TRUNCATE, this._$.first_line,this._$.first_column+1 ); }
-         | Rlength parA EXPRESION parC %prec casts          { $$ = INSTRUCCION.nuevoFNat( $3, TIPO_OPERACION.LENGTH, this._$.first_line,this._$.first_column+1 ); }
+         | lower parA EXPRESION parC %prec casts            { $$ = INSTRUCCION.nuevoFNat($3, TIPO_OPERACION.LOWER, this._$.first_line,this._$.first_column+1 ); }
+         | upper parA EXPRESION parC %prec casts            { $$ = INSTRUCCION.nuevoFNat($3, TIPO_OPERACION.UPPER, this._$.first_line,this._$.first_column+1 ); }
+         | Rtostring parA EXPRESION parC %prec casts        { $$ = INSTRUCCION.nuevoFNat($3, TIPO_OPERACION.TSTRING, this._$.first_line,this._$.first_column+1 ); }
+         | Rtypeof parA EXPRESION parC %prec casts          { $$ = INSTRUCCION.nuevoFNat($3, TIPO_OPERACION.TYPEOF, this._$.first_line,this._$.first_column+1 ); }
+         | Rround parA EXPRESION parC  %prec casts          { $$ = INSTRUCCION.nuevoFNat($3, TIPO_OPERACION.ROUND, this._$.first_line,this._$.first_column+1 ); }
+         | Rtruncate parA EXPRESION parC %prec casts        { $$ = INSTRUCCION.nuevoFNat($3, TIPO_OPERACION.TRUNCATE, this._$.first_line,this._$.first_column+1 ); }
+         | Rlength parA EXPRESION parC %prec casts          { $$ = INSTRUCCION.nuevoFNat($3, TIPO_OPERACION.LENGTH, this._$.first_line,this._$.first_column+1 ); }
          | parA TIPO parC EXPRESION  %prec casts            { $$ = INSTRUCCION.nuevoCasteo($2, TIPO_OPERACION.CASTEO, $4 ,this._$.first_line,this._$.first_column+1 ); }
 ;

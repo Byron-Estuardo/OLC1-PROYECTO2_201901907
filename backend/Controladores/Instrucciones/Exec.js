@@ -6,6 +6,9 @@ const Instruccion = require("./Instruccion")
 function Exec(_instruccion, _ambito) {
     var cadena = ""
     var metodoEjecutar = _ambito.getMetodo(_instruccion.nombre)
+    if (metodoEjecutar == null){
+        metodoEjecutar = _ambito.getFuncion(_instruccion.nombre)
+    }
     //console.log(metodoEjecutar.instrucciones)
     if (metodoEjecutar != null) {
         var nuevoAmbito = new Ambito(_ambito)
@@ -16,7 +19,7 @@ function Exec(_instruccion, _ambito) {
                 var error = false;
                 for (let i = 0; i < metodoEjecutar.lista_parametros.length; i++) {
                     var declaracionAsignacion = Instruccion.nuevaDeclaracion(metodoEjecutar.lista_parametros[i].id, _instruccion.lista_valores[i], metodoEjecutar.lista_parametros[i].tipo_dato, _instruccion.linea, _instruccion.columna)
-                    console.log(nuevoAmbito)
+                    //console.log(nuevoAmbito)
                     var mensaje = DecParametro(declaracionAsignacion, nuevoAmbito)
                     
                     if (mensaje != null) {
@@ -25,7 +28,7 @@ function Exec(_instruccion, _ambito) {
                     }
                 } 
                 if (error) {
-                    console.log(error)
+                    //console.log(error)
                     return cadena
                 }
                 var ejec = Bloque(metodoEjecutar.instrucciones, nuevoAmbito)
@@ -36,7 +39,7 @@ function Exec(_instruccion, _ambito) {
                 else if (ejec.hayContinue) {
                     mensaje += `Error: Se ha encontrado un continue fuera de un ciclo 1`
                 }
-                console.log("HOLA HOLA HOLA HOLA HOLA HOLA HOLA HOLA HOLA HOLA HOLA HOLA : ")
+                //console.log("HOLA HOLA HOLA HOLA HOLA HOLA HOLA HOLA HOLA HOLA HOLA HOLA : ")
                 return mensaje
             }
             else {
@@ -44,7 +47,7 @@ function Exec(_instruccion, _ambito) {
             }
         }
         else {
-            console.log("elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+            //console.log("elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
             var ejec = Bloque(metodoEjecutar.instrucciones, nuevoAmbito)
             var mensaje = ejec.cadena
             if (ejec.hayBreak) {

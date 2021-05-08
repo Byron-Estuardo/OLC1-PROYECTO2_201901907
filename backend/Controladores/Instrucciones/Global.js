@@ -1,5 +1,6 @@
 const TIPO_INSTRUCCION = require("../Tipos/TipoInstruccion")
 const Asignacion = require("./Asignacion")
+const DecFuncion = require("./DecFuncion")
 const Declaracion = require("./Declaracion")
 const DecMetodo = require("./DecMetodo")
 const Exec = require("./Exec")
@@ -36,6 +37,12 @@ function Global(_instrucciones, _ambito){
         }
         else if(_instrucciones[i].tipo === TIPO_INSTRUCCION.DEC_METODO){
             var mensaje = DecMetodo(_instrucciones[i], _ambito)
+            if(mensaje!=null){
+                cadena+=mensaje+'\n'
+            }
+        }
+        else if(_instrucciones[i].tipo === TIPO_INSTRUCCION.FUNCION){
+            var mensaje = DecFuncion(_instrucciones[i], _ambito)
             if(mensaje!=null){
                 cadena+=mensaje+'\n'
             }

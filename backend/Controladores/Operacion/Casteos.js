@@ -18,7 +18,6 @@ function Casteoss(_expresion, _ambito){
         return Aritmetica(_expresion, _ambito)
     }
     else if(_expresion.tipo === TIPO_OPERACION.CASTEO){
-        console.log("casteo")
         return CCasteo(_expresion, _ambito)
     }
     else if(_expresion.tipo === TIPO_OPERACION.LOWER){
