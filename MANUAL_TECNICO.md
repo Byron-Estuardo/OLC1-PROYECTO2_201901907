@@ -1,19 +1,6 @@
 MANUAL TÉCNICO 💻
 ===================
 
-## Indice 🚀
-
-#### • [Descripción de la solución](#descipcion-de-la-solucion-⚙️) ####
-
-#### • [Requerimientos Funcionales del Sistema](#requerimientos-funcionales-del-sistema-📋) ####
-
-#### • [Requerimientos del Entorno de Desarrollo](#requerimientos-del-entorno-de-desarrollo-🔧) ####
-
-#### • [Diccionario de Clases](#diccionario-de-clases-📖) ####
-
-#### • [Diccionario de Funciones](#diccionario-de-funciones-📦) ####
-
-
 Descripción de la solución ⚙️
 -----------------------
 
