@@ -6,11 +6,13 @@ const Declaracion = require("./Declaracion");
 const Asignacion = require("./Asignacion");
 const SentenciaIncremento = require("./Incremento");
 const SentenciaDecremento = require("./Decremento");
-
+ 
 function Sentenciafor(_instruccion, _ambito){
+    var envio = ""
     var mensaje = ""
     var hayBreak = false
     var hayContinue = false
+    var hayReturn = false
     if(_instruccion.variable.tipo === TIPO_INSTRUCCION.DECLARACION){
         Declaracion(_instruccion.variable, _ambito)
     }
@@ -32,6 +34,7 @@ function Sentenciafor(_instruccion, _ambito){
             mensaje += ejec.cadena
             hayBreak = ejec.hayBreak
             hayContinue = ejec.hayContinue
+            hayReturn = ejec.hayReturn
             hasta = Operacion(_instruccion.expresion, _ambito)
             if(_instruccion.aumento.tipo == TIPO_INSTRUCCION.INCREMENTO){
                 SentenciaIncremento(_instruccion.aumento, _ambito)
@@ -53,12 +56,31 @@ function Sentenciafor(_instruccion, _ambito){
                 //console.log(mensaje)
                 continue
             }
+            else if(hayReturn){
+                if(ejec.respuesta){
+                    envio = ejec.respuesta
+                    return {
+                        hayReturn: hayReturn,
+                        respuesta: envio,
+                        cadena: mensaje
+                    }
+                }
+                else{
+                    return
+                }
+            }
         }
     }
     if(mensaje!=null){
         //console.log("MENSAJE FIN FOR: ")
         //console.log(mensaje)
-        return mensaje
+        return{
+            respuesta: envio,
+            hayReturn: hayReturn,
+            hayBreak: hayBreak,
+            hayContinue: hayContinue,
+            cadena: mensaje
+        }
     }
 }
  

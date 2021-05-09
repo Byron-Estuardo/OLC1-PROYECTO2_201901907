@@ -76,10 +76,12 @@ function Bloque(_instrucciones, _ambito){
             }
         }
         else if(instruccion.tipo === TIPO_INSTRUCCION.WHILE){
-            var mensaje = CicloWhile(instruccion, _ambito)
+            var ejec = CicloWhile(instruccion, _ambito)
             hayBreak = false
             hayContinue = false
-            
+            hayReturn = false
+            var mensaje = ejec.cadena
+            respuesta = ejec.respuesta
             if(mensaje!=null){
                 cadena+=mensaje
             }
@@ -96,9 +98,12 @@ function Bloque(_instrucciones, _ambito){
             }
         }
         else if(instruccion.tipo === TIPO_INSTRUCCION.DOWHILE){
-            var mensaje = DoWhile(instruccion, _ambito)
+            var ejec = DoWhile(instruccion, _ambito)
             hayBreak = false
             hayContinue = false
+            hayReturn = false
+            var mensaje = ejec.cadena
+            respuesta = ejec.respuesta
             if(mensaje!=null){
                 cadena+=mensaje
             }
@@ -108,14 +113,19 @@ function Bloque(_instrucciones, _ambito){
             var mensaje = ejec.cadena
             hayBreak = ejec.hayBreak
             hayContinue = ejec.hayContinue
+            hayReturn = ejec.hayReturn
+            respuesta = ejec.respuesta
             if(mensaje!=null){
                 cadena+=mensaje
             }
         }
         else if(instruccion.tipo === TIPO_INSTRUCCION.FOR){
-            var mensaje = Sentenciafor(instruccion, _ambito)
+            var ejec = Sentenciafor(instruccion, _ambito)
             hayBreak = false
             hayContinue = false
+            hayReturn = false
+            var mensaje = ejec.cadena
+            respuesta = ejec.respuesta
             if(mensaje!=null){
                 cadena+=mensaje
             }

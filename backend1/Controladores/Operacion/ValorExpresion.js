@@ -1,3 +1,4 @@
+const Simbolo = require("../Ambito/Simbolo");
 const TIPO_DATO = require("../Tipos/TipoDato");
 const TIPO_VALOR = require("../Tipos/TipoValor");
 
@@ -35,6 +36,7 @@ function ValorExpresion(_expresion, _ambito){
         }
     }
     else if(_expresion.tipo === TIPO_VALOR.CARACTER){
+        
         return {
             valor: _expresion.valor.substring(1, _expresion.valor.length-1),
             tipo: TIPO_DATO.CARACTER,
@@ -45,8 +47,6 @@ function ValorExpresion(_expresion, _ambito){
     else if(_expresion.tipo === TIPO_VALOR.IDENTIFICADOR){
         const simbolo = _ambito.getSimbolo(_expresion.valor)
         if(simbolo!=null){
-            //console.log(_ambito)
-            //console.log(simbolo)
             return {
                 valor: simbolo.valor,
                 tipo: simbolo.tipo,

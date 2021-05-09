@@ -5,8 +5,9 @@
 \s+                   /* skip whitespace */
 "//".*                              // comentario simple línea
 [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/] // comentario multiple líneas
-\"((\\\")|[^\n\"])*\"       { yytext = yytext.substr(0,yyleng); return 'cadenaa'; }
 \'((\\\')|[^\n\'])\'	    { yytext = yytext.substr(0,yyleng); return 'caracterr'; }
+\"((\\\")|[^\n\"])*\"       { yytext = yytext.substr(0,yyleng); return 'cadenaa'; }
+
 
 //Funciones 
 "print"				  return 'Rprint';
