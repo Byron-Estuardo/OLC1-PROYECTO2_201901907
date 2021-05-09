@@ -6,16 +6,10 @@ function DecParametro(_instruccion, _ambito){
     //console.log(_ambito)
     if(_instruccion.tipo_dato === TIPO_DATO.ENTERO){
         var valor = 0
-        if(_instruccion.valor != null){/*
-            console.log("_ambito.anterior")
-            console.log(_ambito.anterior)
-            console.log("_ambito")
-            console.log(_ambito)*/
+        if(_instruccion.valor != null){
             const Operacion = require("../Operacion/Operacion");
             var op = Operacion(_instruccion.valor, _ambito.anterior)
             tipo = op.tipo;
-            //console.log("OPERACION")
-            //console.log(op)
             if(tipo === TIPO_DATO.ENTERO){
                 valor = parseInt(op.valor);
             } 
