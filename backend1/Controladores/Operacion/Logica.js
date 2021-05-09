@@ -1,8 +1,10 @@
 const TIPO_DATO = require("../Tipos/TipoDato")
 const TIPO_OPERACION = require("../Tipos/TipoOperacion")
 const TIPO_VALOR = require("../Tipos/TipoValor")
+const TIPO_INSTRUCCION = require("../Tipos/TipoInstruccion");
 const Relacional = require("./Relacional")
 const ValorExpresion = require("./ValorExpresion")
+const Exec = require("../Instrucciones/Exec");
 
 function Logica(_expresion, _ambito){
     //true || false
@@ -19,6 +21,9 @@ function Logica(_expresion, _ambito){
         _expresion.tipo === TIPO_OPERACION.MENOR || _expresion.tipo === TIPO_OPERACION.MENORIGUAL ||
         _expresion.tipo === TIPO_OPERACION.MAYOR || _expresion.tipo === TIPO_OPERACION.MAYORIGUAL){
         return Relacional(_expresion, _ambito)
+    }
+    else if(_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO){
+        return Exec(_expresion, _ambito)
     }
     else if(_expresion.tipo === TIPO_OPERACION.OR){
         return or(_expresion.opIzq, _expresion.opDer, _ambito)

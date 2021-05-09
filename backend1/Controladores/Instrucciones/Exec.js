@@ -1,5 +1,4 @@
 const Ambito = require("../Ambito/Ambito")
-
 const DecParametro = require("./DecParametro")
 const Instruccion = require("./Instruccion")
 
@@ -49,7 +48,6 @@ function Exec(_instruccion, _ambito) {
                 else{
                     //console.log(ejec)
                     if(metodoEjecutar.tipo == ejec.respuesta.tipo){
-                        console.log("DENTRO")
                         mensaje += ejec.cadena 
                         mensaje += ejec.respuesta.valor
                         console.log(mensaje)
@@ -60,7 +58,6 @@ function Exec(_instruccion, _ambito) {
                     }
                     else{
                         mensaje += ejec.cadena 
-                        
                         return {
                             valor: mensaje,
                             tipo: ejec.respuesta.tipo

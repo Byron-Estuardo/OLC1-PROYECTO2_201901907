@@ -1,8 +1,10 @@
 const TIPO_DATO = require("../Tipos/TipoDato");
 const TIPO_OPERACION = require("../Tipos/TipoOperacion");
 const TIPO_VALOR = require("../Tipos/TipoValor");
+const TIPO_INSTRUCCION = require("../Tipos/TipoInstruccion");
 const Aritmetica = require("./Aritmetica");
 const ValorExpresion = require("./ValorExpresion");
+const Exec = require("../Instrucciones/Exec");
 
 function Relacional(_expresion, _ambito){
     if(_expresion.tipo === TIPO_VALOR.DECIMAL  || _expresion.tipo === TIPO_VALOR.ENTERO || 
@@ -15,6 +17,9 @@ function Relacional(_expresion, _ambito){
             _expresion.tipo === TIPO_OPERACION.POTENCIA || _expresion.tipo === TIPO_OPERACION.NEGATIVO ||
             _expresion.tipo === TIPO_OPERACION.MODULO){
         return Aritmetica(_expresion, _ambito)
+    }
+    else if(_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO){
+        return Exec(_expresion, _ambito)
     }
     else if(_expresion.tipo === TIPO_OPERACION.IGUALIGUAL){
         return igualigual(_expresion.opIzq, _expresion.opDer, _ambito)

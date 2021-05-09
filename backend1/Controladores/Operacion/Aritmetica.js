@@ -1,6 +1,7 @@
 const TIPO_DATO = require("../Tipos/TipoDato")
 const TIPO_OPERACION = require("../Tipos/TipoOperacion")
 const TIPO_VALOR = require("../Tipos/TipoValor")
+const TIPO_INSTRUCCION = require("../Tipos/TipoInstruccion");
 const TipoSuma = require("./Sumaa")
 const TipoResultadoResta = require("./Restaa")
 const TipoResultadoMulti = require("./Multi")
@@ -9,6 +10,7 @@ const TipoResultadoMod = require("./mod")
 const TipoResultadoPot = require("./pot")
 const TipoResultadoNegacion = require("./negacion")
 const ValorExpresion = require("./ValorExpresion")
+const Exec = require("../Instrucciones/Exec");
 const Casteoss = require("./Casteos");
 
 function Aritmetica(_expresion, _ambito){
@@ -23,6 +25,9 @@ function Aritmetica(_expresion, _ambito){
         _expresion.tipo === TIPO_OPERACION.TYPEOF || _expresion.tipo === TIPO_OPERACION.ROUND ||
         _expresion.tipo === TIPO_OPERACION.TRUNCATE || _expresion.tipo === TIPO_OPERACION.LENGTH){
         return Casteoss(_expresion, _ambito)
+    }
+    else if(_expresion.tipo === TIPO_INSTRUCCION.LLAMADA_METODO){
+        return Exec(_expresion, _ambito)
     }
     else if (_expresion.tipo === TIPO_OPERACION.NEGATIVO) {
         return negar(_expresion.opIzq, _ambito)

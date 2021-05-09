@@ -8,7 +8,7 @@ function DecFuncion(_instruccion, _ambito){
         return `Error: No se puede declarar un metodo con el mismo nombre \n de una variable '${nuevoFuncion.id}'... Linea: ${nuevoFuncion.linea} Columna: ${nuevoFuncion.columna}`
     }
     //verificamos si el funcion ya existe
-    else if(_ambito.existeFuncion(nuevoFuncion.id)!=false){
+    else if(_ambito.existeFuncion(nuevoFuncion.id)!=false && _ambito.existeMetodo(nuevoFuncion.id)!=false){
         return `Error: la Funcion '${nuevoFuncion.id}' ya existe... Linea: ${nuevoFuncion.linea} Columna: ${nuevoFuncion.columna}`
     }
     //de lo contrario vamos a guardarlo

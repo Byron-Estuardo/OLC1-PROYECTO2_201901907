@@ -79,6 +79,7 @@ function Bloque(_instrucciones, _ambito){
             var mensaje = CicloWhile(instruccion, _ambito)
             hayBreak = false
             hayContinue = false
+            
             if(mensaje!=null){
                 cadena+=mensaje
             }
