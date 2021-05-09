@@ -46,12 +46,12 @@ GRAMATICAS
 
    | **NOMBRE**    |    **NOMBRE**  |    **NOMBRE**   |
    |---------------|----------------|-----------------|
-   | `INICIO`    | `SWITCHCASE` |``  |
+   | `INICIO`    | `SWITCHCASE` |`LISTAVALORES`  |
    | `CUERPO`   |   `INDEC`  | `FUNCIONES`|
    | `DEC_VAR`|  `BREA`       | `INCRE`      | 
    | `IMPRIMIR`        |  `RE`       | `PARAMETROS`|
-   | `AS_VAR`|`CONTINUE`   | `DOWHILE`        |
-   | `EXEC`        | `DOWHILE`    |   
+   | `AS_VAR`|`CONTINUE`   | `LISTAPARAMETROS`        |
+   | `EXEC`        | `DOWHILE`    | `CASOS_EVALUAR`  |
    | `SIF`          | `LLAMA_METODO`|`LLAMADA `   |
    | `WHILE`   |   `FUNNA`  | `TIPO`|
    | `TIPO`|  `CAST`    | `EXPRESION`| 
