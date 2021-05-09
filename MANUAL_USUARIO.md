@@ -124,28 +124,6 @@ El programa cuenta con una vista gráfica la cual facilita la interacción entre
      
 El código debe de ser ingresado en el área de escritura posicionada en el lado izquierdo de la aplicación, el usuario generará el código que desea programar para posteriormente analizarlo presionando click sobre el boton `Analizar`, en la parte derecha de la aplicaciónn se mostrarán las salidas corresepondientes a las funciones `print` así como la lista de `errores` cometidos.
 
-<div id='questions'/> 
-
-## Preguntas Frecuentes (FAQ) ❓
-**1. ¿Se puede cargar un archivo que sea otro tipo de extensión?** 
-
-> _R//_ *No, el programa admite solo extensiones olc*
-
-**2. ¿Puedo correr el .py desde otro dispositivo?** 
-
-> _R//_ *Sí, solo si tu ordenador debe contar con Node y Angular*
-
-**3. ¿Cuántos archivos puedo ingresar?** 
-
-> _R//_ *El programa no tiene un límite para el ingreso de arcchivos*
-
-**4.¿En donde se almacenan los archivos guardados?** 
-
-> _R//_ *El programa deberá preguntar/indicar el lugar en el cual deseas almacenar tu código*
-
-**5. ¿Por qué no me imprime nada mi código?** 
-
-> _R//_ *Suele suceder porque el código no cuenta con la estructura correspondiente.*
 
 ```java
 Universidad San Carlos de Guatemala 2021
