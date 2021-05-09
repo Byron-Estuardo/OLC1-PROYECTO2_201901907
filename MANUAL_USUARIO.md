@@ -121,8 +121,6 @@ exec Principal();
 El programa cuenta con una vista gráfica la cual facilita la interacción entre el sistema y el usuario final para un mejor desempeño del mismo. Por medio de dicha interfaz, al usuario se le permite seleccionar de forma _gráfica_ una archivo de entrada que contendrá el código a analizar. El usuario puede navegar por la aplicación seleccionando a través de botones la acción que desea realizar, si ocurre un error en el ingreso de datos el programa mostrará un listado de los errores cometidos durante la lectura. 
 
 - Ventana Inicial: La _Ventana Inicial_ cuenta con las opciones: *_Analizar_*, *_Generar AST_*, *_Abrir_* y *_Guardar_*.
-
-![](https://github.com/DiiAns23/Prueba-2/blob/Master/Typesty.PNG)
      
 El código debe de ser ingresado en el área de escritura posicionada en el lado izquierdo de la aplicación, el usuario generará el código que desea programar para posteriormente analizarlo presionando click sobre el boton `Analizar`, en la parte derecha de la aplicaciónn se mostrarán las salidas corresepondientes a las funciones `print` así como la lista de `errores` cometidos.
 
