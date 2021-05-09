@@ -1,48 +1,43 @@
 GRAMATICAS
 =================
 
-## Índice 📚
-- [Terminales](#terminales)
-- [No Terminales](#noterminales)
-- [Producciones](#producciones)
-
 <div id='terminales'/>
 
 ## Terminales
    
    | **NOMBRE** | **SIMBOLO** |  **NOMBRE** | **SIMBOLO** |
    |------------|---------|----------|-------------|
-   | `Rprint`  | print | `Rif` | if 
-   | `Relse`        |   else  | `Rswitch`    | switch
-   | `Rcase`       |  case    | `Rdefault` | default
-   | `Rint`     |  int   | `Rdouble`    | double
-   | `Rboolean`    | boolean     | `Rchar`   | char
-   | `Rstring`    | string      | `Rvoid `  | void
-   | `Rretorno`   | return   | `Rcontinue` | continue
-   | `RtoString` | toString  |  `RtoLower` | toLower
-   | `RtoUpper` |  toUpper  | `Rround` | round
-   | `Rtruncate`   |  truncate  | `Rwhile` | while
-   | `Rbreak`  | break |  `Rfor` | for
-   | `Rnew` | new  | `Rlist`  | list
-   | `Radd`  | add | `Rexec` | exec 
-   | `Rlength`        |   length  | `Rtypeof`    | typeof
-   | `Rdo`       |  do    | `PUNTO` | .
-   | `DPUNTOS`     |  :   | `PTCOMA`    | ;
-   | `COMA`    | ,     | `PARIZQ`   | (
-   | `PARDER`    | )      | `CORIZR `  | [
-   | `CORDER`   | ]   | `LLAVEIZQ` | {
-   | `LLAVEDER` | }  |  `TRUE` | true
-   | `FALSE` |  false  | `MAYORI` | >=
-   | `MENORI`   |  <=  | `IGUALDAD` | ==
-   | `DIFERENTE`  | != |  `IGUAL` | =
-   | `MAS` | +  | `MENOS`  | -
-   | `POR` | *  | `DIV`  | /
-   | `MOD`  | % | `POT` | ^ 
-   | `MAYOR`        |   >  | `MENOR`    | <
-   | `AND`       |  &&    | `OR` | \|\|
-   | `NOT`     |  !   | `ID`    | [a-zA-Z][a-zA-Z0-9_]*
-   | `DECIMAL`    | [0-9]+("."[0-9]+)+\b     | `NUMERO`   | [0-9]+\b
-   | `Cadena`    |   ""    |   | 
+   | `Rprint`  | print 		| `Rif` | if 
+   | `lower`   |   toLower  	| `Rswitch`    | switch
+   | `upper`   |  toUpper    	| `Rdefault` | default
+   | `Rexec`   |  exec   	| `Rdouble`    | double
+   | `Rlength` | length     	| `Rchar`   | char
+   | `Rtruncate` | truncate     | `Rvoid `  | void
+   | `Rround`   | round   	| `Rcontinue` | continue
+   | `RtoString`| toString  	|  `RtoLower` | toLower
+   | `Rentero` 	|  int		| `Rround` | round
+   | `Rdoble`|  double  	| `Rwhile` | while
+   | `Rbooleano` | boleano 	|`for` | for
+   | `Rnew` 	| new  		| `Rlist`  | list
+   | `Radd`  	| add 		| `Rexec` | exec 
+   | `Rlength`  |   length  	| `Rtypeof`    | typeof
+   | `Rdo`      |  do    	| `PUNTO` | .
+   | `DPUNTOS`  |  :   		| `PTCOMA`    | ;
+   | `COMA`     | ,     	| `PARIZQ`   | (
+   | `PARDER`   | )      	| `CORIZR `  | [
+   | `CORDER`   | ]   		| `LLAVEIZQ` | {
+   | `LLAVEDER` | }  		|  `TRUE` | true
+   | `FALSE` 	|  false  	| `MAYORI` | >=
+   | `MENORI`   |  <=  		| `IGUALDAD` | ==
+   | `DIFERENTE`| != 		|  `IGUAL` | =
+   | `MAS` 	| +  		| `MENOS`  | -
+   | `POR` 	| *  		| `DIV`  | /
+   | `MOD`  	| % 		| `POT` | ^ 
+   | `MAYOR`    |   >  		| `MENOR`    | <
+   | `AND`      |  &&    	| `OR` | \|\|
+   | `NOT`     	|  !   		| `ID`    | [a-zA-Z][a-zA-Z0-9_]*
+   | `DECIMAL`  | [0-9]+("."[0-9]+)+\b     | `NUMERO`   | [0-9]+\b
+   | `Cadena`   |   ""    	| `caracter` | ''
 
 
 <div id='noterminales'/>
@@ -51,15 +46,15 @@ GRAMATICAS
 
    | **NOMBRE**    |    **NOMBRE**  |    **NOMBRE**   |
    |---------------|----------------|-----------------|
-   | `INI`          | `LINS`    | `INS `   |
-   | `RETORNO`   |   `DECLARAR`  | `FUNCIONES`|
-   | `PARAMETROS`|  `ASIGNAR`       | `INCRE`      | 
-   | `TERNARIO`        |  `IF`       | `SWITCH`   | 
-   | `ELSEIF` | `LCASOS`      | `DOWHILE`        |
-   | `WHILE`        | `BLOQUE`        |   
-   | `FOR`          | `ACTUALIZAR`    | `LLAMADA `   |
-   | `CASTEO`   |   `TIPO2`  | `TIPO`|
-   | `TIPO`|  `Exp`       | `L_EXP`      |   
+   | `INICIO`    | `SWITCHCASE` |``  |
+   | `CUERPO`   |   `INDEC`  | `FUNCIONES`|
+   | `DEC_VAR`|  `BREA`       | `INCRE`      | 
+   | `IMPRIMIR`        |  `RE`       | `PARAMETROS`|
+   | `AS_VAR`|`CONTINUE`   | `DOWHILE`        |
+   | `EXEC`        | `DOWHILE`    |   
+   | `SIF`          | `LLAMA_METODO`|`LLAMADA `   |
+   | `WHILE`   |   `FUNNA`  | `TIPO`|
+   | `TIPO`|  `CAST`    | `EXPRESION`| 
 
 
 <div id='producciones'/>
