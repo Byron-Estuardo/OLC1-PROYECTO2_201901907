@@ -88,83 +88,85 @@ function SentenciaIf(_instruccion, _ambito){
             cadena: mensaje
         } 
     }
-    else if(operacion.valor == true){
-        var nuevoAmbito = new Ambito(_ambito)
-        const Bloque = require("./Bloque");
-        var ejec = Bloque(_instruccion.instruccionesv,nuevoAmbito)
-        mensaje += ejec.cadena
-        hayBreak = ejec.hayBreak;
-        hayContinue = ejec.hayContinue;
-        hayReturn = ejec.hayReturn;
-        if(hayBreak){
-            return {
-                hayBreak: hayBreak,
-                cadena: mensaje
-            }
-        }
-        else if(hayContinue){
-            operacion = Operacion(_instruccion.expresion, _ambito);
-            return {
-                hayContinue: hayContinue,
-                cadena: mensaje
-            }
-        }
-        else if(hayReturn){
-            if(ejec.respuesta){
-                envio = ejec.respuesta
+    if (operacion.valor != null){
+        if(operacion.valor == true){
+            var nuevoAmbito = new Ambito(_ambito)
+            const Bloque = require("./Bloque");
+            var ejec = Bloque(_instruccion.instruccionesv,nuevoAmbito)
+            mensaje += ejec.cadena
+            hayBreak = ejec.hayBreak;
+            hayContinue = ejec.hayContinue;
+            hayReturn = ejec.hayReturn;
+            if(hayBreak){
                 return {
-                    hayReturn: hayReturn,
-                    respuesta: envio,
+                    hayBreak: hayBreak,
                     cadena: mensaje
                 }
             }
-            else{
-                return
-            }
-        }
-    }
-    if(_instruccion.instruccionesf != null && operacion.valor == false){
-        var nuevoAmbito = new Ambito(_ambito)
-        const Bloque = require("./Bloque")
-        var ejec = Bloque(_instruccion.instruccionesf,nuevoAmbito)
-        hayBreak = ejec.hayBreak;
-        hayContinue = ejec.hayContinue;
-        hayReturn = ejec.hayReturn;
-        mensaje += ejec.cadena
-        if(hayBreak){
-            return {
-                hayBreak: hayBreak,
-                cadena: mensaje
-            }
-        }
-        else if(hayContinue){
-            operacion = Operacion(_instruccion.expresion, _ambito);
-            return {
-                hayContinue: hayContinue,
-                cadena: mensaje
-            }
-        }
-        else if(hayReturn){
-            if(ejec.respuesta){
-                envio = ejec.respuesta
+            else if(hayContinue){
+                operacion = Operacion(_instruccion.expresion, _ambito);
                 return {
-                    hayReturn: hayReturn,
-                    respuesta: envio,
+                    hayContinue: hayContinue,
                     cadena: mensaje
                 }
             }
-            else{
-                return
+            else if(hayReturn){
+                if(ejec.respuesta){
+                    envio = ejec.respuesta
+                    return {
+                        hayReturn: hayReturn,
+                        respuesta: envio,
+                        cadena: mensaje
+                    }
+                }
+                else{
+                    return
+                }
             }
         }
+        if(_instruccion.instruccionesf != null && operacion.valor == false){
+            var nuevoAmbito = new Ambito(_ambito)
+            const Bloque = require("./Bloque")
+            var ejec = Bloque(_instruccion.instruccionesf,nuevoAmbito)
+            hayBreak = ejec.hayBreak;
+            hayContinue = ejec.hayContinue;
+            hayReturn = ejec.hayReturn;
+            mensaje += ejec.cadena
+            if(hayBreak){
+                return {
+                    hayBreak: hayBreak,
+                    cadena: mensaje
+                }
+            }
+            else if(hayContinue){
+                operacion = Operacion(_instruccion.expresion, _ambito);
+                return {
+                    hayContinue: hayContinue,
+                    cadena: mensaje
+                }
+            }
+            else if(hayReturn){
+                if(ejec.respuesta){
+                    envio = ejec.respuesta
+                    return {
+                        hayReturn: hayReturn,
+                        respuesta: envio,
+                        cadena: mensaje
+                    }
+                }
+                else{
+                    return
+                }
+            }
+        }
+        return{
+            respuesta: envio,
+            hayReturn: hayReturn,
+            hayBreak: hayBreak,
+            hayContinue: hayContinue,
+            cadena: mensaje
+        } 
     }
-    return{
-        respuesta: envio,
-        hayReturn: hayReturn,
-        hayBreak: hayBreak,
-        hayContinue: hayContinue,
-        cadena: mensaje
-    }  
     return{
         hayReturn: hayReturn,
         hayBreak: hayBreak,
