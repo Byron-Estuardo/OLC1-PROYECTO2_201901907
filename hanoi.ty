@@ -1,0 +1,18 @@
+void hanoi(int num,char A,char C,char B){
+    if(num==1){
+      print("Mueva el bloque " + num + " desde " + A + " hasta  " + c);      
+    }
+    else{
+        hanoi(num-1,A,B,C);
+      print("Mueva el bloque " + num + " desde " + A + " hasta  " + C);
+        hanoi(num-1,B,C,A);
+    }
+}
+ 
+void main(){
+  int n = 5;
+  print("Los clavijas son A B C\n");
+  print("Numero de discos: " + n);
+  hanoi(n,'A','C','B');       
+}
+exec main();

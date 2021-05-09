@@ -1,0 +1,27 @@
+int Fibonacci(int num){
+  if (num == 0 || num == 1){
+    return num;
+  } else {
+    return Fibonacci(num-1) + Fibonacci(num-2); 
+  }
+}
+
+void principal (int limite) {
+  for (int i=0; i<limite; i++){
+    print("Fibonacci de " + i + ":    " + Fibonacci(i));
+  }
+}
+
+exec principal (9);
+
+/* -------------------- Salida esperada  -------------------- 
+Fibonacci de 0:    0
+Fibonacci de 1:    1
+Fibonacci de 2:    1
+Fibonacci de 3:    2
+Fibonacci de 4:    3
+Fibonacci de 5:    5
+Fibonacci de 6:    8
+Fibonacci de 7:    13
+Fibonacci de 8:    21
+*/
