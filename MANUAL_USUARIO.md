@@ -1,10 +1,5 @@
 MANUAL DE USUARIO 🕹️
 ===================
-## Índice 📚
-- [Introduccion](#introduccion)
-- [Descripción General del Sistema](#descrip)
-- [Aplicacion](#apli)
-- [FAQ](#questions)
 
 <div id='introduccion'/>
 
@@ -70,7 +65,7 @@ Además de poseer palabras reservadas para las declaraciones de variables, `Type
    | `toString()` | Recibe como parametro una expresión de tipo `int`,`double` o `boolean` y retorna un `string`|
    | `toCharArray()` | Permite convertir un `string` en una `lista` de datos de tipo `char` |
 
-  - **Ejemplo de Programación**:
+  - **Ejemplo de Entrada**:
 ```java
 double r_toRadians;
 double r_sine;
