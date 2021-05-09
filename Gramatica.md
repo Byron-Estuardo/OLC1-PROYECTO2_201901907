@@ -67,7 +67,7 @@ GRAMATICAS
 `OPCIONESCUERPO -> OPCIONESCUERPO CUERPO
         | CUERPO`
 
-`CUERPO -> : DEC_VAR         
+`CUERPO ->  DEC_VAR         
 | IMPRIMIR        
 | DEC_MET         
 | AS_VAR          
@@ -198,7 +198,7 @@ GRAMATICAS
 `RETU -> Rreturn ptcoma          
     | Rreturn EXPRESION ptcoma`
 
-`EXPRESION identificador parA parC                       
+`EXPRESION -> identificador parA parC                       
          | identificador parA LISTAVALORES parC          
          | EXPRESION Rternario EXPRESION dospts EXPRESION
          | EXPRESION mass EXPRESION                      
